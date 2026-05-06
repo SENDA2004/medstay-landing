@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MedStay — Pricing</title>
+<title>MedStay — Contact</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--sea:#0197AF;--teal:#00c4b8;--aqua:#4dd9e0;--cream:#fff9f2;--white:#fff;--ink:#1a2744;--dim:#6b7a99;--warm:#f8f0e8;}
@@ -21,109 +21,104 @@ nav ul a:hover,nav ul a.on{color:var(--sea);border-color:var(--sea);}
 .nav-cta{background:linear-gradient(135deg,var(--sea),var(--teal));color:var(--white);padding:10px 26px;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;transition:all .3s;box-shadow:0 4px 20px rgba(1,151,175,.25);}
 .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(1,151,175,.4);}
 
-/* PAGE HERO */
-.page-hero{padding:130px 72px 80px;position:relative;overflow:hidden;background:linear-gradient(180deg,#b8e4f7 0%,#d4eefd 25%,#e8f7ff 55%,#fff8f0 80%,var(--warm) 100%);text-align:center;}
-.ph-sun{position:absolute;top:10%;right:10%;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,#ffe066 0%,#ffb347 45%,rgba(245,166,35,0) 100%);box-shadow:0 0 50px rgba(255,180,50,.4);animation:sunP 6s ease-in-out infinite;}
-@keyframes sunP{0%,100%{box-shadow:0 0 50px rgba(255,180,50,.4)}50%{box-shadow:0 0 70px rgba(255,180,50,.6)}}
-.ph-content{position:relative;z-index:2;}
-.ph-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.85);border:1px solid rgba(1,151,175,.2);color:var(--sea);font-size:11px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;padding:8px 18px;border-radius:100px;margin-bottom:22px;box-shadow:0 4px 16px rgba(1,151,175,.1);opacity:0;animation:fadeUp .7s ease .2s forwards;}
+/* MAIN LAYOUT */
+.contact-wrap{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+/* LEFT — info side */
+.contact-left{
+  background:linear-gradient(180deg,#b8e4f7 0%,#d4eefd 20%,#e8f7ff 45%,#fff8f0 75%,var(--warm) 100%);
+  padding:130px 60px 80px;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.cl-sun{position:absolute;top:8%;right:8%;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#ffe066 0%,#ffb347 45%,rgba(245,166,35,0) 100%);box-shadow:0 0 40px rgba(255,180,50,.4);animation:sunP 6s ease-in-out infinite;}
+@keyframes sunP{0%,100%{box-shadow:0 0 40px rgba(255,180,50,.4)}50%{box-shadow:0 0 60px rgba(255,180,50,.6)}}
+.cl-wave{position:absolute;bottom:0;left:0;right:0;}
+.cl-content{position:relative;z-index:2;}
+.cl-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.85);border:1px solid rgba(1,151,175,.2);color:var(--sea);font-size:11px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;padding:7px 16px;border-radius:100px;margin-bottom:24px;box-shadow:0 4px 14px rgba(1,151,175,.1);opacity:0;animation:fadeUp .7s ease .2s forwards;}
 .bdot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:bdot 2s ease-in-out infinite;}
 @keyframes bdot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.8);opacity:.3}}
-.ph-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,6vw,76px);font-weight:600;line-height:1.02;letter-spacing:-2px;color:var(--ink);margin-bottom:16px;opacity:0;animation:fadeUp .9s ease .4s forwards;}
-.ph-title em{font-style:italic;background:linear-gradient(135deg,var(--sea),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.ph-sub{font-size:18px;color:var(--dim);font-weight:300;line-height:1.8;max-width:520px;margin:0 auto;opacity:0;animation:fadeUp .9s ease .6s forwards;}
-.ph-wave{position:absolute;bottom:-1px;left:0;right:0;}
+.cl-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,4vw,60px);font-weight:600;line-height:1.05;letter-spacing:-1.5px;color:var(--ink);margin-bottom:18px;opacity:0;animation:fadeUp .9s ease .4s forwards;}
+.cl-title em{font-style:italic;background:linear-gradient(135deg,var(--sea),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cl-sub{font-size:16px;color:var(--dim);font-weight:300;line-height:1.78;margin-bottom:40px;max-width:380px;opacity:0;animation:fadeUp .9s ease .6s forwards;}
 
-/* GUARANTEE STRIP */
-.guarantee-strip{
+/* Info items */
+.info-items{display:flex;flex-direction:column;gap:14px;opacity:0;animation:fadeUp .9s ease .8s forwards;}
+.info-item{display:flex;align-items:center;gap:14px;padding:14px 18px;background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.9);border-radius:14px;backdrop-filter:blur(12px);box-shadow:0 4px 16px rgba(0,0,0,.05);transition:all .3s;}
+.info-item:hover{transform:translateX(4px);box-shadow:0 8px 24px rgba(1,151,175,.12);}
+.ii-ic{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--sea),var(--teal));display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(1,151,175,.3);}
+.ii-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:2px;}
+.ii-val{font-size:14px;font-weight:500;color:var(--ink);}
+
+/* Guarantees */
+.guarantees{display:flex;flex-direction:column;gap:10px;margin-top:32px;opacity:0;animation:fadeUp .9s ease 1s forwards;}
+.guar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dim);}
+.guar-tick{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,var(--sea),var(--teal));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* RIGHT — form side */
+.contact-right{
   background:var(--white);
-  padding:20px 72px;
-  display:flex;align-items:center;justify-content:center;gap:48px;
-  border-bottom:1px solid rgba(1,151,175,.08);
+  padding:130px 64px 80px;
+  display:flex;flex-direction:column;justify-content:center;
 }
-.gs-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dim);font-weight:400;}
-.gs-ic{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--sea),var(--teal));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--ink);margin-bottom:6px;letter-spacing:-.5px;}
+.form-title em{font-style:italic;color:var(--sea);}
+.form-sub{font-size:14px;color:var(--dim);margin-bottom:34px;font-weight:300;line-height:1.6;}
 
-/* PRICING */
-.price-sec{background:var(--white);padding:80px 72px;}
-.price-intro{text-align:center;margin-bottom:56px;}
-.sl{font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--sea);display:flex;align-items:center;gap:12px;margin-bottom:16px;}
-.sl::before{content:'';width:30px;height:1.5px;background:var(--sea);border-radius:2px;}
-.stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,50px);font-weight:600;line-height:1.1;letter-spacing:-1px;color:var(--ink);margin-bottom:14px;}
-.stitle em{font-style:italic;background:linear-gradient(135deg,var(--sea),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.sbody{font-size:16px;color:var(--dim);font-weight:300;line-height:1.8;max-width:520px;}
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:980px;margin:0 auto;}
-.pcard{
-  padding:40px 34px;border-radius:24px;
-  border:1px solid rgba(1,151,175,.12);
-  background:var(--white);
-  transition:all .45s;cursor:default;
-  position:relative;
+/* Form fields */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.fg label{font-size:11px;font-weight:600;color:var(--dim);letter-spacing:.8px;text-transform:uppercase;}
+.fg input,.fg select,.fg textarea{
+  padding:13px 16px;
+  border:1.5px solid rgba(26,39,68,.1);
+  border-radius:12px;
+  font-size:14px;
+  font-family:'DM Sans',sans-serif;
+  color:var(--ink);
+  background:var(--cream);
+  transition:all .3s;
+  outline:none;
+  cursor:text;
+  appearance:none;
 }
-.pcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--sea),var(--teal),var(--aqua));border-radius:0 0 24px 24px;transform:scaleX(0);transform-origin:left;transition:transform .45s;}
-.pcard:hover{border-color:rgba(1,151,175,.22);transform:translateY(-7px);box-shadow:0 28px 64px rgba(1,151,175,.14);}
-.pcard:hover::after{transform:scaleX(1);}
-.pcard.featured{
-  background:linear-gradient(180deg,rgba(1,151,175,.05) 0%,var(--white) 100%);
-  border-color:rgba(1,151,175,.25);
-  box-shadow:0 12px 40px rgba(1,151,175,.12);
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--sea);background:var(--white);box-shadow:0 0 0 4px rgba(1,151,175,.07);}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(107,122,153,.45);}
+.fg textarea{resize:vertical;min-height:96px;font-weight:300;}
+.fg select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%236b7a99' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;}
+
+/* Submit button */
+.submit-btn{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--sea),var(--teal));
+  color:var(--white);border:none;border-radius:100px;
+  font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all .3s;
+  box-shadow:0 8px 28px rgba(1,151,175,.3);
+  display:flex;align-items:center;justify-content:center;gap:8px;
 }
-.pcard.featured::after{transform:scaleX(1);}
-.pop-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--sea),var(--teal));color:var(--white);font-size:11px;font-weight:600;padding:5px 18px;border-radius:100px;white-space:nowrap;box-shadow:0 4px 16px rgba(1,151,175,.3);}
-.plan-name{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:18px;}
-.price-num{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:700;color:var(--ink);line-height:1;margin-bottom:4px;}
-.price-num sup{font-size:26px;font-weight:400;vertical-align:super;}
-.price-num sub{font-size:16px;font-weight:300;color:var(--dim);}
-.price-desc{font-size:13px;color:var(--dim);margin-bottom:26px;line-height:1.55;font-weight:300;}
-.plist{list-style:none;margin-bottom:30px;}
-.plist li{font-size:14px;color:var(--dim);padding:9px 0;border-bottom:1px solid rgba(1,151,175,.07);display:flex;align-items:center;gap:9px;font-weight:300;}
-.plist li:last-child{border-bottom:none;}
-.plist li::before{content:'✓';color:var(--sea);font-weight:700;flex-shrink:0;}
-.pbtn{display:block;text-align:center;padding:14px;border-radius:100px;font-size:14px;font-weight:600;text-decoration:none;transition:all .3s;border:1.5px solid rgba(1,151,175,.25);color:var(--sea);}
-.pbtn:hover{background:rgba(1,151,175,.07);border-color:var(--sea);}
-.pbtn.main{background:linear-gradient(135deg,var(--sea),var(--teal));color:var(--white);border:none;box-shadow:0 6px 24px rgba(1,151,175,.28);}
-.pbtn.main:hover{box-shadow:0 12px 36px rgba(1,151,175,.42);transform:translateY(-2px);}
+.submit-btn:hover{box-shadow:0 16px 40px rgba(1,151,175,.45);transform:translateY(-2px);}
+.submit-btn:active{transform:translateY(0);}
 
-/* COMPARISON */
-.compare-sec{background:var(--warm);padding:80px 72px;}
-.compare-table{
-  width:100%;border-collapse:separate;border-spacing:0;
-  margin-top:40px;border-radius:20px;overflow:hidden;
-  box-shadow:0 4px 24px rgba(0,0,0,.06);
+/* Success state */
+.success-msg{
+  display:none;
+  background:rgba(1,151,175,.06);
+  border:1px solid rgba(1,151,175,.2);
+  border-radius:20px;
+  padding:40px 32px;
+  text-align:center;
+  margin-top:16px;
 }
-.compare-table th{background:var(--ink);color:var(--white);padding:18px 24px;font-size:13px;font-weight:500;text-align:left;}
-.compare-table th:first-child{width:40%;}
-.compare-table th.hl{background:linear-gradient(135deg,var(--sea),var(--teal));color:var(--white);}
-.compare-table td{padding:14px 24px;font-size:14px;color:var(--dim);border-bottom:1px solid rgba(1,151,175,.07);background:var(--white);font-weight:300;}
-.compare-table tr:last-child td{border-bottom:none;}
-.compare-table tr:nth-child(even) td{background:#fafeff;}
-.tick{color:var(--sea);font-weight:700;font-size:16px;}
-.cross{color:rgba(107,122,153,.4);font-size:16px;}
-.ft-label{color:var(--ink);font-weight:500;font-size:14px;}
+.success-msg.show{display:block;}
+.success-icon{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--sea),var(--teal));display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 8px 24px rgba(1,151,175,.3);}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+.success-sub{font-size:14px;color:var(--dim);font-weight:300;line-height:1.65;}
 
-/* FAQ */
-.faq-sec{background:var(--white);padding:80px 72px;}
-.faq-wrap{max-width:680px;margin:40px auto 0;}
-.faq-item{border-bottom:1px solid rgba(1,151,175,.1);padding:22px 0;cursor:default;}
-.faq-q{font-size:16px;font-weight:500;color:var(--ink);margin-bottom:0;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-.faq-q svg{flex-shrink:0;transition:transform .3s;color:var(--sea);}
-.faq-item.open .faq-q svg{transform:rotate(180deg);}
-.faq-a{font-size:14px;color:var(--dim);font-weight:300;line-height:1.75;margin-top:12px;display:none;}
-.faq-item.open .faq-a{display:block;}
-
-/* CTA BAND */
-.cta-band{background:linear-gradient(135deg,#e8f7ff 0%,#fff8f0 50%,#fdf0e0 100%);padding:100px 72px;text-align:center;position:relative;overflow:hidden;}
-.cta-band::before{content:'';position:absolute;top:-80px;left:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(1,151,175,.07),transparent 70%);}
-.cta-band::after{content:'';position:absolute;bottom:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.07),transparent 70%);}
-.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:600;letter-spacing:-2px;line-height:1.05;color:var(--ink);margin-bottom:18px;position:relative;z-index:2;}
-.cta-title em{font-style:italic;background:linear-gradient(135deg,var(--sea),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.cta-sub{font-size:17px;color:var(--dim);max-width:420px;margin:0 auto 40px;line-height:1.78;font-weight:300;position:relative;z-index:2;}
-.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2;}
-.trust{margin-top:22px;font-size:13px;color:rgba(107,122,153,.55);position:relative;z-index:2;}
-.btn-sea{background:linear-gradient(135deg,var(--sea),var(--teal));color:var(--white);padding:15px 36px;border-radius:100px;font-size:15px;font-weight:600;text-decoration:none;transition:all .3s;box-shadow:0 8px 28px rgba(1,151,175,.3);display:inline-flex;align-items:center;gap:8px;}
-.btn-sea:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(1,151,175,.45);}
-.btn-warm{color:var(--ink);padding:15px 32px;border-radius:100px;font-size:15px;font-weight:400;text-decoration:none;border:1.5px solid rgba(26,39,68,.18);background:rgba(255,255,255,.8);backdrop-filter:blur(8px);transition:all .3s;display:inline-flex;align-items:center;gap:8px;}
-.btn-warm:hover{border-color:var(--sea);color:var(--sea);}
 footer{background:var(--ink);padding:38px 72px;display:flex;align-items:center;justify-content:space-between;}
 .fl{display:flex;align-items:center;gap:10px;text-decoration:none;}
 .fln{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:rgba(255,255,255,.55);}
@@ -133,14 +128,14 @@ footer span{font-size:12px;color:rgba(255,255,255,.2);font-weight:300;}
 .fmail:hover{color:var(--teal);}
 .r{opacity:0;transform:translateY(26px);transition:opacity .82s ease,transform .82s ease;}
 .r.in{opacity:1;transform:translateY(0);}
-.r2{transition-delay:.11s;}.r3{transition-delay:.22s;}.r4{transition-delay:.33s;}.r5{transition-delay:.44s;}
+.r2{transition-delay:.11s;}.r3{transition-delay:.22s;}.r4{transition-delay:.33s;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:960px){
   nav{padding:14px 20px;}nav ul{display:none;}.nav-cta{padding:8px 18px;font-size:12px;}.logo-tag{display:none;}
-  .page-hero{padding:100px 20px 60px;}.price-sec,.compare-sec,.faq-sec,.cta-band{padding:56px 20px;}
-  .guarantee-strip{flex-wrap:wrap;gap:20px;padding:16px 20px;}
-  .price-grid{grid-template-columns:1fr;gap:18px;max-width:100%;}
-  .compare-table{font-size:12px;}.compare-table th,.compare-table td{padding:10px 12px;}
+  .contact-wrap{grid-template-columns:1fr;}
+  .contact-left{padding:100px 20px 50px;}
+  .contact-right{padding:40px 20px 60px;}
+  .form-row{grid-template-columns:1fr;}
   footer{flex-direction:column;gap:12px;text-align:center;padding:26px 20px;}
 }
 </style>
@@ -149,136 +144,107 @@ footer span{font-size:12px;color:rgba(255,255,255,.2);font-weight:300;}
 <div id="cur"></div><div id="cur-r"></div>
 <nav>
   <a href="index.html" class="logo-a"><svg width="36" height="36" viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="17" stroke="#0197AF" stroke-width="1.5" stroke-dasharray="3.5 2.5" opacity="0.5"><animateTransform attributeName="transform" type="rotate" from="0 19 19" to="360 19 19" dur="18s" repeatCount="indefinite"/></circle><path d="M7 23 Q10 18 13 23 Q16 28 19 23 Q22 18 25 23 Q28 28 31 23" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"/><circle cx="19" cy="14" r="5" fill="#0197AF" opacity="0.12"/><circle cx="19" cy="14" r="3" fill="#0197AF"/><circle cx="19" cy="14" r="1.3" fill="#00c4b8"><animate attributeName="opacity" values="1;.3;1" dur="2.5s" repeatCount="indefinite"/></circle></svg><div><div class="logo-name">Med<em>Stay</em></div><span class="logo-tag">Hospitality Platform</span></div></a>
-  <ul><li><a href="index.html">Home</a></li><li><a href="features.html">Features</a></li><li><a href="pricing.html" class="on">Pricing</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <ul><li><a href="index.html">Home</a></li><li><a href="features.html">Features</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html" class="on">Contact</a></li></ul>
   <a href="contact.html" class="nav-cta">Get started →</a>
 </nav>
 
-<div class="page-hero">
-  <div class="ph-sun"></div>
-  <div class="ph-content">
-    <div class="ph-badge"><div class="bdot"></div>Simple · Transparent · No surprises</div>
-    <h1 class="ph-title">Flat pricing.<br><em>Zero commission.</em></h1>
-    <p class="ph-sub">One monthly fee. Every booking stays 100% yours. No hidden costs, no percentage taken from your revenue — ever.</p>
-  </div>
-  <div class="ph-wave"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="display:block;height:60px"><path d="M0,40 Q360,0 720,40 Q1080,80 1440,40 L1440,60 L0,60 Z" fill="#ffffff"/></svg></div>
-</div>
+<div class="contact-wrap">
+  <!-- LEFT -->
+  <div class="contact-left">
+    <div class="cl-sun"></div>
+    <div class="cl-content">
+      <div class="cl-badge"><div class="bdot"></div>30-day free trial</div>
+      <h1 class="cl-title">Start your<br><em>free trial</em><br>today</h1>
+      <p class="cl-sub">Fill in the form and we will get back to you within 24 hours to set up your hotel on MedStay. No credit card, no technical skills needed.</p>
 
-<!-- GUARANTEE STRIP -->
-<div class="guarantee-strip">
-  <div class="gs-item"><div class="gs-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>30-day free trial</div>
-  <div class="gs-item"><div class="gs-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>No credit card required</div>
-  <div class="gs-item"><div class="gs-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>Cancel anytime</div>
-  <div class="gs-item"><div class="gs-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>0% commission taken</div>
-  <div class="gs-item"><div class="gs-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>Setup in 30 minutes</div>
-</div>
+      <div class="info-items">
+        <div class="info-item">
+          <div class="ii-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="ii-label">Email</div><div class="ii-val">hello@medstay.io</div></div>
+        </div>
+        <div class="info-item">
+          <div class="ii-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div><div class="ii-label">WhatsApp</div><div class="ii-val">Available on request</div></div>
+        </div>
+        <div class="info-item">
+          <div class="ii-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div><div class="ii-label">We serve</div><div class="ii-val">Tunisia · Italy · France · Europe</div></div>
+        </div>
+      </div>
 
-<!-- PRICING -->
-<section class="price-sec">
-  <div class="price-intro r">
-    <div class="sl" style="justify-content:center">Choose your plan</div>
-    <h2 class="stitle" style="text-align:center">Simple, <em>transparent</em> pricing</h2>
-    <p class="sbody" style="margin:0 auto;text-align:center">Every plan includes all 6 features. The difference is the size of your hotel.</p>
-  </div>
-  <div class="price-grid">
-    <div class="pcard r">
-      <div class="plan-name">Starter</div>
-      <div class="price-num"><sup>€</sup>49<sub>/month</sub></div>
-      <p class="price-desc">For small guesthouses and B&Bs getting started with digital bookings.</p>
-      <ul class="plist">
-        <li>Up to 10 rooms</li>
-        <li>Your own booking page</li>
-        <li>WhatsApp confirmations</li>
-        <li>Occupancy dashboard</li>
-        <li>Auto review requests</li>
-        <li>Email support</li>
-      </ul>
-      <a href="contact.html" class="pbtn">Start free trial</a>
+      <div class="guarantees">
+        <div class="guar"><div class="guar-tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>30-day free trial — no credit card</div>
+        <div class="guar"><div class="guar-tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>We reply within 24 hours</div>
+        <div class="guar"><div class="guar-tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>Setup takes 30 minutes</div>
+        <div class="guar"><div class="guar-tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>Cancel anytime, no penalty</div>
+      </div>
     </div>
-    <div class="pcard featured r r2">
-      <div class="pop-badge">Most popular</div>
-      <div class="plan-name">Professional</div>
-      <div class="price-num"><sup>€</sup>99<sub>/month</sub></div>
-      <p class="price-desc">For established hotels ready to grow with full automation and analytics.</p>
-      <ul class="plist">
-        <li>Unlimited rooms</li>
-        <li>5-language messaging</li>
-        <li>Seasonal demand view</li>
-        <li>Guest history tracking</li>
-        <li>Pricing suggestions</li>
-        <li>Priority support</li>
-      </ul>
-      <a href="contact.html" class="pbtn main">Start free trial</a>
+    <div class="cl-wave"><svg viewBox="0 0 400 60" preserveAspectRatio="none" style="display:block;height:50px;width:100%"><path d="M0,40 Q100,10 200,35 Q300,60 400,30 L400,60 L0,60 Z" fill="rgba(1,151,175,.06)"/></svg></div>
+  </div>
+
+  <!-- RIGHT — FORM -->
+  <div class="contact-right">
+    <div class="r">
+      <h2 class="form-title">Tell us about<br><em>your hotel</em></h2>
+      <p class="form-sub">We'll set up your free trial and guide you through everything, step by step.</p>
     </div>
-    <div class="pcard r r3">
-      <div class="plan-name">Business</div>
-      <div class="price-num"><sup>€</sup>199<sub>/month</sub></div>
-      <p class="price-desc">For hotel groups with multiple properties across countries.</p>
-      <ul class="plist">
-        <li>Multiple properties</li>
-        <li>Mediterranean Network access</li>
-        <li>Custom integrations</li>
-        <li>Dedicated account manager</li>
-        <li>Custom onboarding session</li>
-        <li>Phone & WhatsApp support</li>
-      </ul>
-      <a href="contact.html" class="pbtn">Contact us</a>
+
+    <form id="contactForm" class="r r2">
+      <div class="form-row">
+        <div class="fg"><label>First name *</label><input type="text" placeholder="Marco" required></div>
+        <div class="fg"><label>Last name *</label><input type="text" placeholder="Rossi" required></div>
+      </div>
+      <div class="fg"><label>Email address *</label><input type="email" placeholder="marco@hotelriviera.it" required></div>
+      <div class="fg"><label>Hotel or business name *</label><input type="text" placeholder="Hotel Riviera" required></div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Country</label>
+          <select>
+            <option value="">Select your country</option>
+            <option>🇹🇳 Tunisia</option>
+            <option>🇮🇹 Italy</option>
+            <option>🇫🇷 France</option>
+            <option>🇩🇪 Germany</option>
+            <option>🇨🇭 Switzerland</option>
+            <option>🇬🇧 United Kingdom</option>
+            <option>🇲🇨 Monaco</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Number of rooms</label>
+          <select>
+            <option value="">How many rooms?</option>
+            <option>1–5 rooms</option>
+            <option>6–10 rooms</option>
+            <option>11–20 rooms</option>
+            <option>More than 20</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Plan you're interested in</label>
+        <select>
+          <option>Starter — €49/month</option>
+          <option selected>Professional — €99/month</option>
+          <option>Business — €199/month</option>
+          <option>Not sure yet — help me choose</option>
+        </select>
+      </div>
+      <div class="fg"><label>Anything you want us to know? (optional)</label><textarea placeholder="Tell us about your hotel, what you're currently using to manage bookings, or any questions you have..."></textarea></div>
+      <button type="submit" class="submit-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Send message & start free trial
+      </button>
+      <p style="text-align:center;font-size:12px;color:var(--dim);margin-top:14px;font-weight:300">We reply within 24 hours · No credit card required · 0% commission forever</p>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      <div class="success-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="success-title">Message received!</div>
+      <p class="success-sub">Thank you for reaching out. We will get back to you within 24 hours to set up your hotel on MedStay and start your free trial. Check your email.</p>
     </div>
   </div>
-</section>
-
-<!-- COMPARISON TABLE -->
-<section class="compare-sec">
-  <div class="r"><div class="sl">Plan comparison</div></div>
-  <h2 class="stitle r r2">Everything <em>side by side</em></h2>
-  <div class="r r3">
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th>Starter</th>
-          <th class="hl">Professional</th>
-          <th>Business</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td class="ft-label">Booking page</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
-        <tr><td class="ft-label">WhatsApp automation</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
-        <tr><td class="ft-label">Auto review requests</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
-        <tr><td class="ft-label">Occupancy dashboard</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
-        <tr><td class="ft-label">Number of rooms</td><td>Up to 10</td><td>Unlimited</td><td>Unlimited</td></tr>
-        <tr><td class="ft-label">5-language messaging</td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
-        <tr><td class="ft-label">Seasonal demand view</td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
-        <tr><td class="ft-label">Pricing suggestions</td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
-        <tr><td class="ft-label">Multiple properties</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td></tr>
-        <tr><td class="ft-label">Mediterranean Network</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td></tr>
-        <tr><td class="ft-label">Account manager</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="tick">✓</span></td></tr>
-        <tr><td class="ft-label">Commission taken</td><td>0%</td><td>0%</td><td>0%</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-sec">
-  <div class="r" style="text-align:center"><div class="sl" style="justify-content:center">Questions</div></div>
-  <h2 class="stitle r r2" style="text-align:center">Common <em>questions</em></h2>
-  <div class="faq-wrap">
-    <div class="faq-item r"><div class="faq-q">Is there really a 30-day free trial?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div><div class="faq-a">Yes, completely free for 30 days. No credit card required to start. You can use every feature of the plan you choose, and if you decide not to continue, you simply stop — no charge, no questions.</div></div>
-    <div class="faq-item r r2"><div class="faq-q">Do you take commission on bookings?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div><div class="faq-a">Never. Every euro a guest pays for a room goes directly to you. We charge a flat monthly subscription fee only. This is the fundamental difference between MedStay and platforms like Booking.com, which take 15–25% of every reservation.</div></div>
-    <div class="faq-item r r3"><div class="faq-q">How long does setup take?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div><div class="faq-a">Most hotel owners are fully live within 30 minutes. You add your rooms, upload photos, set your prices, and your booking page is ready. We guide you through every step, and our team is available if you need help.</div></div>
-    <div class="faq-item r r4"><div class="faq-q">Can I change plans later?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div><div class="faq-a">Yes, anytime. You can upgrade or downgrade between plans. Changes take effect at the start of your next billing month. There are no penalties or fees for switching.</div></div>
-    <div class="faq-item r r5"><div class="faq-q">What languages does MedStay support?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div><div class="faq-a">The dashboard is available in English and French. Guest-facing messages are automatically sent in Arabic, French, Italian, German, or English depending on the guest's preference — available on Professional and Business plans.</div></div>
-    <div class="faq-item r"><div class="faq-q">What if I need help getting started?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div><div class="faq-a">We are available by email and WhatsApp to help you set up your hotel profile and answer any questions. Business plan customers get a dedicated onboarding session by video call.</div></div>
-  </div>
-</section>
-
-<!-- CTA -->
-<div class="cta-band">
-  <div class="r"><div class="sl" style="justify-content:center">Get started</div></div>
-  <h2 class="cta-title r r2">Start free.<br><em>Stay if you love it.</em></h2>
-  <p class="cta-sub r r3">30 days free, full access, no credit card. If it doesn't work for your hotel, you pay nothing.</p>
-  <div class="cta-btns r r4"><a href="contact.html" class="btn-sea" style="font-size:16px;padding:16px 44px">Start free trial →</a><a href="features.html" class="btn-warm" style="font-size:16px;padding:16px 36px">See all features</a></div>
-  <div class="trust r r5">Flat monthly fee · 0% commission · Cancel anytime</div>
 </div>
 
 <footer>
@@ -286,20 +252,19 @@ footer span{font-size:12px;color:rgba(255,255,255,.2);font-weight:300;}
   <span>© 2025 MedStay · Tunisia · Italy · France · Switzerland · Germany · UK</span>
   <a href="mailto:hello@medstay.io" class="fmail">hello@medstay.io</a>
 </footer>
+
 <script>
 const cur=document.getElementById('cur'),cr=document.getElementById('cur-r');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx-5+'px';cur.style.top=my-5+'px';});
 (function rl(){rx+=(mx-rx-18)*.1;ry+=(my-ry-18)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(rl);})();
-document.querySelectorAll('a,button,.pcard').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2.5)';cr.style.opacity='.2';});el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';cr.style.opacity='1';});});
+document.querySelectorAll('a,button,input,select,textarea,.info-item').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2.5)';cr.style.opacity='.2';});el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';cr.style.opacity='1';});});
 const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*75);obs.unobserve(e.target);}});},{threshold:.06});
 document.querySelectorAll('.r').forEach(el=>obs.observe(el));
-document.querySelectorAll('.faq-item').forEach(item=>{
-  item.querySelector('.faq-q').addEventListener('click',()=>{
-    const wasOpen=item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
-    if(!wasOpen)item.classList.add('open');
-  });
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  this.style.display='none';
+  document.getElementById('successMsg').classList.add('show');
 });
 </script>
 </body></html>
