@@ -1,104 +1,220 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>MedStay — Features</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedStay — Features</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#02153D;--purple:#4B227A;--teal:#0197AF;--mint:#00EED0;--bg:#f7f9fc;--white:#fff;--ink:#0a1628;--dim:#5a7a8a;}
-*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;cursor:none;}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--mint);position:fixed;pointer-events:none;z-index:9999;transition:transform .2s;}
-.ring{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(1,151,175,.5);position:fixed;pointer-events:none;z-index:9998;transition:all .28s ease;}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 64px;display:flex;align-items:center;justify-content:space-between;background:rgba(2,21,61,.95);backdrop-filter:blur(24px);border-bottom:1px solid rgba(1,151,175,.12);}
-.logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.logo-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--white);letter-spacing:-.5px;}
-.logo-name em{font-style:italic;color:var(--mint);}
-.logo-tagline{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,238,208,.5);display:block;margin-top:1px;}
-nav ul{list-style:none;display:flex;gap:32px;}
-nav ul a{text-decoration:none;color:rgba(255,255,255,.5);font-size:14px;transition:color .3s;padding-bottom:4px;border-bottom:2px solid transparent;}
-nav ul a:hover,nav ul a.active{color:var(--mint);border-bottom-color:var(--mint);}
-.nav-btn{background:linear-gradient(135deg,var(--teal),var(--mint));color:var(--navy);padding:10px 24px;border-radius:100px;font-size:14px;font-weight:500;text-decoration:none;transition:all .3s;}
-.nav-btn:hover{box-shadow:0 0 36px rgba(0,238,208,.45);transform:translateY(-1px);}
-.page-hero{padding:160px 64px 90px;background:linear-gradient(135deg,#02153D 0%,#0b1e45 50%,#0d2d3a 100%);position:relative;overflow:hidden;}
-.page-hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(1,151,175,.15),transparent 65%);border-radius:50%;animation:breathe 8s ease-in-out infinite;}
-.page-hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(75,34,122,.15),transparent 65%);border-radius:50%;animation:breathe 10s ease-in-out infinite reverse;}
-@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(1,151,175,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(1,151,175,.04) 1px,transparent 1px);background-size:50px 50px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 100%);}
-.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(0,238,208,.25);background:rgba(0,238,208,.07);color:var(--mint);font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:7px 16px;border-radius:100px;margin-bottom:20px;position:relative;z-index:2;opacity:0;animation:up .7s ease .1s forwards;}
-.pdot{width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px var(--mint);animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.8)}}
-.page-title{font-family:'Playfair Display',serif;font-size:clamp(40px,5vw,70px);font-weight:400;color:var(--white);letter-spacing:-1px;line-height:1.05;position:relative;z-index:2;opacity:0;animation:up .8s ease .3s forwards;}
-.page-title em{font-style:italic;background:linear-gradient(90deg,var(--teal),var(--mint));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.page-sub{font-size:18px;color:rgba(255,255,255,.5);font-weight:300;max-width:540px;line-height:1.7;margin-top:16px;position:relative;z-index:2;opacity:0;animation:up .8s ease .5s forwards;}
-.feat-sec{padding:100px 64px;background:linear-gradient(160deg,#02153D 0%,#061428 50%,#0a1f2e 100%);position:relative;overflow:hidden;}
-.feat-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 50%,rgba(1,151,175,.07),transparent),radial-gradient(ellipse 50% 60% at 80% 30%,rgba(75,34,122,.08),transparent);pointer-events:none;}
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-.feat-card{position:relative;padding:36px 30px;border-radius:20px;background:rgba(6,20,40,.7);border:1px solid rgba(1,151,175,.15);cursor:none;transition:all .4s;overflow:hidden;backdrop-filter:blur(12px);}
-.feat-card::before{content:'';position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(135deg,var(--mint),var(--teal),var(--purple));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s;}
-.feat-card:hover::before{opacity:1;}.feat-card:hover{transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.3);}
-.feat-card::after{content:'';position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);width:100px;height:50px;border-radius:50%;filter:blur(20px);opacity:0;transition:opacity .4s;}
-.feat-card:hover::after{opacity:1;}
-.feat-card:nth-child(1)::after,.feat-card:nth-child(4)::after{background:var(--mint);}
-.feat-card:nth-child(2)::after,.feat-card:nth-child(5)::after{background:var(--teal);}
-.feat-card:nth-child(3)::after,.feat-card:nth-child(6)::after{background:var(--purple);}
-.feat-ic{width:48px;height:48px;border-radius:14px;background:rgba(0,238,208,.08);border:1px solid rgba(0,238,208,.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:all .3s;}
-.feat-card:hover .feat-ic{background:rgba(0,238,208,.15);box-shadow:0 0 20px rgba(0,238,208,.2);}
-.feat-card h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--white);margin-bottom:10px;}
-.feat-card p{font-size:14px;color:rgba(255,255,255,.45);line-height:1.7;font-weight:300;}
-.feat-tag{display:inline-block;margin-top:14px;font-size:10px;padding:3px 10px;border-radius:100px;background:rgba(0,238,208,.08);color:var(--mint);letter-spacing:.5px;border:1px solid rgba(0,238,208,.18);}
-.s-label{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--mint);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.s-label::before{content:'';width:28px;height:1px;background:var(--mint);}
-h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,46px);font-weight:400;letter-spacing:-.5px;line-height:1.15;color:var(--white);margin-bottom:14px;}
-h2 em{font-style:italic;background:linear-gradient(90deg,var(--teal),var(--mint));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.s-sub{font-size:16px;color:rgba(255,255,255,.4);font-weight:300;line-height:1.7;max-width:500px;margin-bottom:56px;}
-.cta-band{background:var(--bg);padding:80px 64px;text-align:center;}
-.cta-band h2{color:var(--ink)!important;-webkit-text-fill-color:var(--ink)!important;}
-.cta-band h2 em{background:linear-gradient(90deg,var(--teal),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.cta-band p{color:var(--dim);max-width:440px;margin:0 auto 36px;font-size:16px;font-weight:300;line-height:1.7;}
-.btn-p{background:linear-gradient(135deg,var(--teal),var(--mint));color:var(--navy);padding:14px 36px;border-radius:100px;font-size:15px;font-weight:500;text-decoration:none;display:inline-block;transition:all .3s;box-shadow:0 0 24px rgba(0,238,208,.2);}
-.btn-p:hover{box-shadow:0 0 48px rgba(0,238,208,.45);transform:translateY(-2px);}
-.btn-ghost{color:var(--teal);padding:14px 32px;border-radius:100px;font-size:15px;text-decoration:none;display:inline-block;transition:all .3s;border:1.5px solid rgba(1,151,175,.3);margin-left:12px;}
-.btn-ghost:hover{background:rgba(1,151,175,.07);border-color:var(--teal);}
-footer{background:#020e1f;padding:36px 64px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(1,151,175,.1);}
-.f-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
-.f-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:rgba(255,255,255,.6);}
-.f-name em{font-style:italic;color:var(--mint);}
+:root{--sea:#0197AF;--teal:#00c4b8;--aqua:#4dd9e0;--cream:#fff9f2;--white:#fff;--ink:#1a2744;--dim:#6b7a99;--warm:#f8f0e8;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;cursor:none;}
+#cur{width:10px;height:10px;border-radius:50%;background:var(--sea);position:fixed;pointer-events:none;z-index:9999;transition:transform .15s;box-shadow:0 0 10px rgba(1,151,175,.4);}
+#cur-r{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(1,151,175,.35);position:fixed;pointer-events:none;z-index:9998;transition:all .22s ease;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:20px 72px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,252,248,.96);backdrop-filter:blur(24px);border-bottom:1px solid rgba(232,149,109,.15);box-shadow:0 4px 24px rgba(232,149,109,.06);}
+.logo-a{display:flex;align-items:center;gap:11px;text-decoration:none;}
+.logo-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--ink);letter-spacing:-.3px;}
+.logo-name em{font-style:italic;color:var(--sea);}
+.logo-tag{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);display:block;margin-top:1px;}
+nav ul{list-style:none;display:flex;gap:40px;}
+nav ul a{text-decoration:none;color:var(--dim);font-size:14px;transition:color .3s;padding-bottom:2px;border-bottom:1.5px solid transparent;}
+nav ul a:hover,nav ul a.on{color:var(--sea);border-color:var(--sea);}
+.nav-cta{background:linear-gradient(135deg,var(--sea),var(--teal));color:var(--white);padding:10px 26px;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;transition:all .3s;box-shadow:0 4px 20px rgba(1,151,175,.25);}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(1,151,175,.4);}
+.page-hero{padding:130px 72px 80px;position:relative;overflow:hidden;background:linear-gradient(180deg,#b8e4f7 0%,#d4eefd 25%,#e8f7ff 55%,#fff8f0 80%,var(--warm) 100%);text-align:center;}
+.ph-sun{position:absolute;top:10%;right:10%;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,#ffe066 0%,#ffb347 45%,rgba(245,166,35,0) 100%);box-shadow:0 0 50px rgba(255,180,50,.4),0 0 100px rgba(255,180,50,.15);animation:sunP 6s ease-in-out infinite;}
+@keyframes sunP{0%,100%{box-shadow:0 0 50px rgba(255,180,50,.4)}50%{box-shadow:0 0 70px rgba(255,180,50,.6)}}
+.ph-content{position:relative;z-index:2;}
+.ph-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.85);border:1px solid rgba(1,151,175,.2);color:var(--sea);font-size:11px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;padding:8px 18px;border-radius:100px;margin-bottom:22px;box-shadow:0 4px 16px rgba(1,151,175,.1);opacity:0;animation:fadeUp .7s ease .2s forwards;}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:bdot 2s ease-in-out infinite;}
+@keyframes bdot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.8);opacity:.3}}
+.ph-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,6vw,76px);font-weight:600;line-height:1.02;letter-spacing:-2px;color:var(--ink);margin-bottom:16px;opacity:0;animation:fadeUp .9s ease .4s forwards;}
+.ph-title em{font-style:italic;background:linear-gradient(135deg,var(--sea),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ph-sub{font-size:18px;color:var(--dim);font-weight:300;line-height:1.8;max-width:560px;margin:0 auto;opacity:0;animation:fadeUp .9s ease .6s forwards;}
+.ph-wave{position:absolute;bottom:-1px;left:0;right:0;}
+.sl{font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--sea);display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.sl::before{content:'';width:30px;height:1.5px;background:var(--sea);border-radius:2px;}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,50px);font-weight:600;line-height:1.1;letter-spacing:-1px;color:var(--ink);margin-bottom:14px;}
+.stitle em{font-style:italic;background:linear-gradient(135deg,var(--sea),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.sbody{font-size:16px;color:var(--dim);font-weight:300;line-height:1.8;max-width:520px;}
+section{padding:90px 72px;}
+.btn-sea{background:linear-gradient(135deg,var(--sea),var(--teal));color:var(--white);padding:15px 36px;border-radius:100px;font-size:15px;font-weight:600;text-decoration:none;transition:all .3s;box-shadow:0 8px 28px rgba(1,151,175,.3);display:inline-flex;align-items:center;gap:8px;}
+.btn-sea:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(1,151,175,.45);}
+.btn-warm{color:var(--ink);padding:15px 32px;border-radius:100px;font-size:15px;font-weight:400;text-decoration:none;border:1.5px solid rgba(26,39,68,.18);background:rgba(255,255,255,.8);backdrop-filter:blur(8px);transition:all .3s;display:inline-flex;align-items:center;gap:8px;}
+.btn-warm:hover{border-color:var(--sea);color:var(--sea);}
+
+/* FEAT GRID */
+.feat-sec{background:var(--white);padding:90px 72px;}
+.feat-intro{text-align:center;margin-bottom:60px;}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.fcard{padding:36px 30px;border-radius:22px;border:1px solid rgba(1,151,175,.1);background:var(--white);transition:all .45s;cursor:default;position:relative;overflow:hidden;}
+.fcard::before{content:'';position:absolute;top:0;left:0;right:0;height:180px;background:radial-gradient(ellipse at 50% 0%,rgba(1,151,175,.05),transparent);opacity:0;transition:opacity .4s;}
+.fcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--sea),var(--teal),var(--aqua));transform:scaleX(0);transform-origin:left;transition:transform .45s;}
+.fcard:hover{border-color:rgba(1,151,175,.22);transform:translateY(-6px);box-shadow:0 24px 56px rgba(1,151,175,.12);}
+.fcard:hover::before{opacity:1;}.fcard:hover::after{transform:scaleX(1);}
+.fi{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,rgba(1,151,175,.1),rgba(0,196,184,.07));border:1px solid rgba(1,151,175,.15);display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:all .35s;}
+.fcard:hover .fi{background:linear-gradient(135deg,rgba(1,151,175,.18),rgba(0,196,184,.14));box-shadow:0 0 22px rgba(1,151,175,.18);}
+.fcard h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink);margin-bottom:10px;letter-spacing:-.2px;}
+.fcard p{font-size:14px;color:var(--dim);line-height:1.75;font-weight:300;}
+.fdetail{font-size:13px;color:var(--sea);font-weight:500;margin-top:14px;display:flex;align-items:center;gap:6px;}
+.fdetail::after{content:'→';transition:transform .3s;}.fcard:hover .fdetail::after{transform:translateX(4px);}
+.ftag{display:inline-block;margin-top:14px;font-size:10px;padding:4px 12px;border-radius:100px;background:rgba(1,151,175,.08);color:var(--sea);letter-spacing:.5px;border:1px solid rgba(1,151,175,.15);font-weight:500;}
+
+/* DEEP DIVES */
+.deep-sec{background:var(--warm);padding:90px 72px;}
+.deep-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(1,151,175,.18),transparent);margin:72px 0;}
+.deep-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.deep-flip{direction:rtl;}.deep-flip>*{direction:ltr;}
+.dv{background:var(--white);border-radius:24px;padding:32px;box-shadow:0 20px 60px rgba(1,151,175,.1),0 4px 16px rgba(0,0,0,.04);border:1px solid rgba(1,151,175,.1);transition:all .4s;}
+.dv:hover{transform:translateY(-4px);box-shadow:0 32px 80px rgba(1,151,175,.15);}
+.dv-label{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.dv-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:bdot 2s infinite;}
+.dv-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--ink);margin-bottom:16px;}
+.dv-msg{background:rgba(1,151,175,.06);border:1px solid rgba(1,151,175,.12);border-radius:12px;padding:12px 16px;margin-bottom:10px;}
+.dv-msg-h{font-size:11px;font-weight:600;color:var(--sea);margin-bottom:5px;}
+.dv-msg-b{font-size:13px;color:var(--dim);font-weight:300;line-height:1.55;}
+.dv-bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.dv-bar-lbl{font-size:12px;color:var(--dim);width:78px;flex-shrink:0;}
+.dv-bar-bg{flex:1;height:8px;background:rgba(1,151,175,.1);border-radius:4px;overflow:hidden;}
+.dv-bar-fill{height:100%;background:linear-gradient(90deg,var(--sea),var(--teal));border-radius:4px;width:0;animation:barF 1.5s ease forwards;animation-delay:var(--d);}
+@keyframes barF{to{width:var(--w)}}
+.dv-stat{margin-top:18px;padding-top:14px;border-top:1px solid rgba(1,151,175,.1);}
+.dv-stat-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;background:linear-gradient(135deg,var(--sea),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.dv-stat-lbl{font-size:12px;color:var(--dim);margin-top:3px;}
+.dv-check{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.05);font-size:13px;color:var(--dim);font-weight:300;}
+.dv-check:last-child{border-bottom:none;}
+.dv-ck-ic{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,var(--sea),var(--teal));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dt h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.5vw,42px);font-weight:600;line-height:1.15;letter-spacing:-.8px;color:var(--ink);margin-bottom:14px;}
+.dt h2 em{font-style:italic;background:linear-gradient(135deg,var(--sea),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.dt p{font-size:15px;color:var(--dim);font-weight:300;line-height:1.8;margin-bottom:12px;}
+
+/* CTA BAND */
+.cta-band{background:linear-gradient(135deg,#e8f7ff 0%,#fff8f0 50%,#fdf0e0 100%);padding:100px 72px;text-align:center;position:relative;overflow:hidden;}
+.cta-band::before{content:'';position:absolute;top:-80px;left:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(1,151,175,.07),transparent 70%);}
+.cta-band::after{content:'';position:absolute;bottom:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.07),transparent 70%);}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:600;letter-spacing:-2px;line-height:1.05;color:var(--ink);margin-bottom:18px;position:relative;z-index:2;}
+.cta-title em{font-style:italic;background:linear-gradient(135deg,var(--sea),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cta-sub{font-size:17px;color:var(--dim);max-width:420px;margin:0 auto 40px;line-height:1.78;font-weight:300;position:relative;z-index:2;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2;}
+.trust{margin-top:22px;font-size:13px;color:rgba(107,122,153,.55);position:relative;z-index:2;}
+footer{background:var(--ink);padding:38px 72px;display:flex;align-items:center;justify-content:space-between;}
+.fl{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.fln{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:rgba(255,255,255,.55);}
+.fln em{font-style:italic;color:var(--aqua);}
 footer span{font-size:12px;color:rgba(255,255,255,.2);font-weight:300;}
-footer a.mail{font-size:12px;color:rgba(0,238,208,.5);text-decoration:none;}
-.r{opacity:0;transform:translateY(22px);transition:opacity .75s ease,transform .75s ease;}
+.fmail{font-size:12px;color:rgba(0,196,184,.5);text-decoration:none;transition:color .3s;}
+.fmail:hover{color:var(--teal);}
+.r{opacity:0;transform:translateY(26px);transition:opacity .82s ease,transform .82s ease;}
 .r.in{opacity:1;transform:translateY(0);}
-.r2{transition-delay:.1s;}.r3{transition-delay:.2s;}.r4{transition-delay:.3s;}.r5{transition-delay:.4s;}.r6{transition-delay:.5s;}
-@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:768px){nav{padding:14px 20px;}nav ul{display:none;}.nav-btn{padding:8px 16px;font-size:12px;}.logo-tagline{display:none;}.page-hero{padding:110px 20px 60px;}.feat-sec{padding:60px 20px;}.feat-grid{grid-template-columns:1fr;gap:14px;}.cta-band{padding:60px 20px;}h2{font-size:26px;}footer{flex-direction:column;gap:12px;text-align:center;padding:24px 20px;}}
-</style></head><body>
-<div class="dot" id="dot"></div><div class="ring" id="ring"></div>
+.r2{transition-delay:.11s;}.r3{transition-delay:.22s;}.r4{transition-delay:.33s;}.r5{transition-delay:.44s;}.r6{transition-delay:.55s;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:960px){
+  nav{padding:14px 20px;}nav ul{display:none;}.nav-cta{padding:8px 18px;font-size:12px;}.logo-tag{display:none;}
+  .page-hero,.feat-sec,.deep-sec,.cta-band{padding:100px 20px 60px;}
+  .feat-sec,.cta-band{padding:56px 20px;}
+  .deep-sec{padding:56px 20px;}
+  .feat-grid{grid-template-columns:1fr;gap:14px;}
+  .deep-grid,.deep-flip{grid-template-columns:1fr;gap:36px;direction:ltr;}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:26px 20px;}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-r"></div>
 <nav>
-  <a href="index.html" class="logo-wrap"><svg width="34" height="34" viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="17" stroke="#0197AF" stroke-width="1.5" stroke-dasharray="3.5 2.5" opacity="0.5"/><path d="M7 23 Q10 18 13 23 Q16 28 19 23 Q22 18 25 23 Q28 28 31 23" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"/><circle cx="19" cy="14" r="5" fill="#0197AF" opacity="0.2"/><circle cx="19" cy="14" r="3" fill="#0197AF"/><circle cx="19" cy="14" r="1.3" fill="#00EED0"/></svg><div><div class="logo-name">Med<em>Stay</em></div><span class="logo-tagline">Hospitality Intelligence</span></div></a>
-  <ul><li><a href="index.html">Home</a></li><li><a href="features.html" class="active">Features</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li></ul>
-  <a href="contact.html" class="nav-btn">Start free trial</a>
+  <a href="index.html" class="logo-a"><svg width="36" height="36" viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="17" stroke="#0197AF" stroke-width="1.5" stroke-dasharray="3.5 2.5" opacity="0.5"><animateTransform attributeName="transform" type="rotate" from="0 19 19" to="360 19 19" dur="18s" repeatCount="indefinite"/></circle><path d="M7 23 Q10 18 13 23 Q16 28 19 23 Q22 18 25 23 Q28 28 31 23" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"/><circle cx="19" cy="14" r="5" fill="#0197AF" opacity="0.12"/><circle cx="19" cy="14" r="3" fill="#0197AF"/><circle cx="19" cy="14" r="1.3" fill="#00c4b8"><animate attributeName="opacity" values="1;.3;1" dur="2.5s" repeatCount="indefinite"/></circle></svg><div><div class="logo-name">Med<em>Stay</em></div><span class="logo-tag">Hospitality Platform</span></div></a>
+  <ul><li><a href="index.html">Home</a></li><li><a href="features.html" class="on">Features</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <a href="contact.html" class="nav-cta">Get started →</a>
 </nav>
-<div class="page-hero"><div class="hero-grid"></div>
-  <div class="pill"><div class="pdot"></div>6 Powerful Features</div>
-  <h1 class="page-title">Everything your hotel<br><em>actually needs</em></h1>
-  <p class="page-sub">Built specifically for Mediterranean tourism businesses — not generic software adapted from somewhere else.</p>
-</div>
-<section class="feat-sec"><div style="position:relative;z-index:2">
-  <div class="r"><div class="s-label">All features</div></div>
-  <h2 class="r r2">Built for the <em>Mediterranean</em></h2>
-  <p class="s-sub r r3">Every feature solves a real problem that small hotel owners face every day.</p>
-  <div class="feat-grid">
-    <div class="feat-card r"><div class="feat-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.66z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.66z"/></svg></div><h3>AI Smart Pricing</h3><p>Analyzes your historical bookings, local events, and seasonal demand to recommend the perfect room rate — automatically, before your competitors move. Hotels using this feature average 22% more revenue per room.</p><span class="feat-tag">✦ Exclusive</span></div>
-    <div class="feat-card r r2"><div class="feat-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>WhatsApp Automation</h3><p>Booking confirmations, arrival reminders, and promotional messages sent directly through WhatsApp — automatically. 97% delivery rate. Your guests love it. You do nothing.</p></div>
-    <div class="feat-card r r3"><div class="feat-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3>5-Language Messaging</h3><p>Write one message in Italian. Guests receive it in Arabic, French, German, or English — automatically translated and culturally adapted. No extra work needed from you.</p></div>
-    <div class="feat-card r r4"><div class="feat-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><h3>Auto Review Requests</h3><p>After every checkout, guests receive a perfectly timed Google Review request through WhatsApp. Hotels using this average a 0.7 star improvement within 90 days.</p><span class="feat-tag">✦ Exclusive</span></div>
-    <div class="feat-card r r5"><div class="feat-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><h3>Seasonal Intelligence</h3><p>Visual dashboards showing your busiest weeks months ahead, which guest nationalities spend most, and occupancy predictions so you always stay ahead of the market.</p></div>
-    <div class="feat-card r r6"><div class="feat-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div><h3>Mediterranean Bridge</h3><p>Unique cross-market feature connecting Italian hotels with Tunisian travelers and vice versa. Fill your low-season gaps with cross-Mediterranean guests who travel during your quiet months.</p><span class="feat-tag">✦ Exclusive</span></div>
+
+<div class="page-hero">
+  <div class="ph-sun"></div>
+  <div class="ph-content">
+    <div class="ph-badge"><div class="bdot"></div>6 features · Built for you</div>
+    <h1 class="ph-title">Everything your hotel<br><em>actually needs</em></h1>
+    <p class="ph-sub">Each feature was built around one question: what does a small Mediterranean hotel owner actually struggle with every single day?</p>
   </div>
-</div></section>
-<div class="cta-band"><div class="r"><div style="font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-bottom:14px;justify-content:center"><span style="display:inline-block;width:28px;height:1px;background:var(--teal)"></span>Ready to start</div></div><h2 class="r r2">Try all features <em>free for 30 days</em></h2><p class="r r3">No credit card required. Setup in under 30 minutes. Cancel anytime.</p><div class="r r4"><a href="contact.html" class="btn-p">Start free trial →</a><a href="pricing.html" class="btn-ghost">See pricing</a></div></div>
-<footer><a href="index.html" class="f-logo"><svg width="26" height="26" viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="17" stroke="#0197AF" stroke-width="1.2" opacity="0.4"/><path d="M7 23 Q10 18 13 23 Q16 28 19 23 Q22 18 25 23 Q28 28 31 23" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"/><circle cx="19" cy="14" r="3" fill="#0197AF"/><circle cx="19" cy="14" r="1.2" fill="#00EED0"/></svg><div class="f-name">Med<em>Stay</em></div></a><span>© 2025 MedStay · Tunisia · Italy · France · Switzerland · Germany · UK</span><a href="mailto:hello@medstay.io" class="mail">hello@medstay.io</a></footer>
+  <div class="ph-wave"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="display:block;height:60px"><path d="M0,40 Q360,0 720,40 Q1080,80 1440,40 L1440,60 L0,60 Z" fill="#ffffff"/></svg></div>
+</div>
+
+<section class="feat-sec">
+  <div class="feat-intro r">
+    <div class="sl" style="justify-content:center">All features</div>
+    <h2 class="stitle" style="text-align:center">Built for the <em>Mediterranean</em></h2>
+    <p class="sbody" style="margin:0 auto;text-align:center">Not generic software. Every tool here solves a real problem that real hotel owners face.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="fcard r"><div class="fi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>WhatsApp Automation</h3><p>Every booking triggers an automatic WhatsApp message — confirmation, arrival reminder, and checkout follow-up. Written in the guest's language, sent at the right time. You do nothing.</p><div class="fdetail">97% delivery rate</div></div>
+    <div class="fcard r r2"><div class="fi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3>5-Language Messaging</h3><p>Write once in your language. Guests receive it in Arabic, French, Italian, German, or English — automatically detected from their booking. No manual translation ever needed.</p><div class="fdetail">5 languages</div></div>
+    <div class="fcard r r3"><div class="fi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div><h3>Occupancy Dashboard</h3><p>See all booked rooms, upcoming arrivals, available dates, and monthly revenue in one simple view. No spreadsheets, no notebooks — everything in one place.</p><div class="fdetail">Real-time</div></div>
+    <div class="fcard r r4"><div class="fi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><h3>Auto Review Requests</h3><p>After every checkout, guests receive a friendly message asking for a Google review. A higher rating means more guests find your hotel — without you doing anything extra.</p><span class="ftag">✦ Smart feature</span></div>
+    <div class="fcard r r5"><div class="fi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><h3>Seasonal Demand View</h3><p>See which weeks your hotel fills up fastest, which nationalities book most often, and where you have gaps — so you can adjust prices and plan ahead with real information.</p><div class="fdetail">Monthly breakdown</div></div>
+    <div class="fcard r r6"><div class="fi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div><h3>Mediterranean Network</h3><p>As more hotels join MedStay across Tunisia and Europe, travelers discover your hotel through the network — filling your low-season gaps with guests from the whole region.</p><span class="ftag">✦ Coming soon</span></div>
+  </div>
+</section>
+
+<section class="deep-sec">
+  <div class="r"><div class="sl">Feature deep dive</div></div>
+  <!-- WhatsApp -->
+  <div class="deep-grid r r2">
+    <div class="dv">
+      <div class="dv-label"><div class="dv-dot"></div>Live preview — what guests receive</div>
+      <div class="dv-title">Automatic WhatsApp messages</div>
+      <div class="dv-msg"><div class="dv-msg-h">📱 Booking confirmed</div><div class="dv-msg-b">Bonjour Sophie! Votre réservation à Hotel Riviera est confirmée pour le 15–18 août. Chambre 204, arrivée à partir de 14h. Nous avons hâte de vous accueillir! 🌊</div></div>
+      <div class="dv-msg"><div class="dv-msg-h">📱 Arrival reminder (next day)</div><div class="dv-msg-b">Ciao Sophie! You arrive tomorrow. Check-in from 2pm. Parking available. Any questions? We are here — see you soon! ☀️</div></div>
+      <div class="dv-msg"><div class="dv-msg-h">⭐ Review request (2h after checkout)</div><div class="dv-msg-b">Thank you for staying with us! If you enjoyed your stay, a Google review means the world to small hotels like ours → [link]</div></div>
+    </div>
+    <div class="dt"><div class="sl">WhatsApp Automation</div><h2>Guests informed.<br><em>You do nothing.</em></h2><p>Before MedStay, hotel owners spend hours every morning replying to the same messages — "Is breakfast included?", "What time is check-in?", "How do I get there?"</p><p>With MedStay, every guest receives exactly the right message at the right time, automatically, in their own language.</p></div>
+  </div>
+  <div class="deep-divider"></div>
+  <!-- Dashboard -->
+  <div class="deep-grid deep-flip r">
+    <div class="dt"><div class="sl">Occupancy Dashboard</div><h2>See everything<br><em>at a glance.</em></h2><p>Your dashboard shows exactly what's happening — which rooms are booked, what revenue is coming in, and which guests are arriving soon. No spreadsheets. No notebooks.</p><p>One clear view of your whole business, updated in real time.</p></div>
+    <div class="dv">
+      <div class="dv-label"><div class="dv-dot"></div>Dashboard preview</div>
+      <div class="dv-title">August room occupancy</div>
+      <div class="dv-bar-row"><div class="dv-bar-lbl">Room 101</div><div class="dv-bar-bg"><div class="dv-bar-fill" style="--w:90%;--d:.2s"></div></div><span style="font-size:12px;color:var(--sea);font-weight:600;flex-shrink:0">90%</span></div>
+      <div class="dv-bar-row"><div class="dv-bar-lbl">Room 202</div><div class="dv-bar-bg"><div class="dv-bar-fill" style="--w:75%;--d:.4s"></div></div><span style="font-size:12px;color:var(--sea);font-weight:600;flex-shrink:0">75%</span></div>
+      <div class="dv-bar-row"><div class="dv-bar-lbl">Suite 301</div><div class="dv-bar-bg"><div class="dv-bar-fill" style="--w:60%;--d:.6s"></div></div><span style="font-size:12px;color:var(--sea);font-weight:600;flex-shrink:0">60%</span></div>
+      <div class="dv-bar-row"><div class="dv-bar-lbl">Room 104</div><div class="dv-bar-bg"><div class="dv-bar-fill" style="--w:85%;--d:.8s"></div></div><span style="font-size:12px;color:var(--sea);font-weight:600;flex-shrink:0">85%</span></div>
+      <div class="dv-stat"><div class="dv-stat-num">€12,480</div><div class="dv-stat-lbl">Revenue confirmed for August</div></div>
+    </div>
+  </div>
+  <div class="deep-divider"></div>
+  <!-- Reviews -->
+  <div class="deep-grid r">
+    <div class="dv">
+      <div class="dv-label"><div class="dv-dot"></div>What this means for your hotel</div>
+      <div class="dv-title">Auto review requests</div>
+      <div class="dv-check"><div class="dv-ck-ic"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>Sent automatically after every checkout</div>
+      <div class="dv-check"><div class="dv-ck-ic"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>In the guest's language</div>
+      <div class="dv-check"><div class="dv-ck-ic"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>Direct link to your Google page</div>
+      <div class="dv-check"><div class="dv-ck-ic"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>Timed 2 hours after checkout</div>
+      <div class="dv-stat"><div class="dv-stat-num">+0.7 stars</div><div class="dv-stat-lbl">Average rating increase in 90 days</div></div>
+    </div>
+    <div class="dt"><div class="sl">Auto Review Requests</div><h2>Better rating.<br><em>No extra effort.</em></h2><p>Happy guests rarely think to leave a review unless someone asks. MedStay asks for you — automatically, at the perfect moment, in their language.</p><p>A higher Google rating brings more guests to your page, which means more bookings, which means more revenue — from a simple automated message.</p></div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <div class="r"><div class="sl" style="justify-content:center">Try it free</div></div>
+  <h2 class="cta-title r r2">All features included<br><em>from day one.</em></h2>
+  <p class="cta-sub r r3">Start your 30-day free trial. Every feature is available from the first day. No credit card required.</p>
+  <div class="cta-btns r r4"><a href="contact.html" class="btn-sea" style="font-size:16px;padding:16px 44px">Start free trial →</a><a href="pricing.html" class="btn-warm" style="font-size:16px;padding:16px 36px">See pricing</a></div>
+  <div class="trust r r5">30-day trial · No credit card · Setup in 30 minutes</div>
+</div>
+
+<footer>
+  <a href="index.html" class="fl"><svg width="28" height="28" viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="17" stroke="#0197AF" stroke-width="1.2" opacity="0.4"/><path d="M7 23 Q10 18 13 23 Q16 28 19 23 Q22 18 25 23 Q28 28 31 23" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"/><circle cx="19" cy="14" r="3" fill="#0197AF"/><circle cx="19" cy="14" r="1.3" fill="#00c4b8"/></svg><div class="fln">Med<em>Stay</em></div></a>
+  <span>© 2025 MedStay · Tunisia · Italy · France · Switzerland · Germany · UK</span>
+  <a href="mailto:hello@medstay.io" class="fmail">hello@medstay.io</a>
+</footer>
 <script>
-const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+const cur=document.getElementById('cur'),cr=document.getElementById('cur-r');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx-4+'px';dot.style.top=my-4+'px';});
-(function loop(){rx+=(mx-rx-17)*.1;ry+=(my-ry-17)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
-document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{dot.style.transform='scale(3)';ring.style.opacity='.2';});el.addEventListener('mouseleave',()=>{dot.style.transform='scale(1)';ring.style.opacity='1';});});
-const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*80);obs.unobserve(e.target);}});},{threshold:.07});
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx-5+'px';cur.style.top=my-5+'px';});
+(function rl(){rx+=(mx-rx-18)*.1;ry+=(my-ry-18)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(rl);})();
+document.querySelectorAll('a,button,.fcard').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2.5)';cr.style.opacity='.2';});el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';cr.style.opacity='1';});});
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*75);obs.unobserve(e.target);}});},{threshold:.06});
 document.querySelectorAll('.r').forEach(el=>obs.observe(el));
 </script>
 </body></html>
