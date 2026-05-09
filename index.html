@@ -3,1321 +3,1079 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MedStay — Smart Hospitality for the Mediterranean</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>MedStay — The Guest Relationship Platform for Mediterranean Hotels</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════
-   DESIGN TOKENS
-═══════════════════════════ */
-:root{
-  --navy:#02153D; --deep:#04102e; --purple:#4B227A;
-  --teal:#0197AF; --mint:#00EED0; --sky:#7ee8f8;
-  --amber:#f5a623; --warm:#e8956d;
-  --white:#fff; --dim:rgba(255,255,255,.45);
-  --card:rgba(4,16,46,.72); --border:rgba(1,151,175,.22);
-  --gm:rgba(0,238,208,.35);
+/* ═══════════════════════════════════════════════
+   TOKENS — Professional, clean, confident
+═══════════════════════════════════════════════ */
+:root {
+  --blue:    #0197AF;
+  --blue-d:  #017a8c;
+  --teal:    #00c4b8;
+  --ink:     #0f1f2e;
+  --ink-2:   #243447;
+  --dim:     #5c7080;
+  --line:    #e4edf2;
+  --bg:      #f8fbfd;
+  --white:   #ffffff;
+  --warm:    #fdf8f4;
+  --accent:  #f0f9fb;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--deep);
-  color:var(--white);
-  overflow-x:hidden;
-  cursor:none;
+/* ═══ RESET ══════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── CURSOR ── */
-#cur{width:10px;height:10px;border-radius:50%;background:var(--mint);
-  position:fixed;pointer-events:none;z-index:9999;
-  box-shadow:0 0 14px var(--mint),0 0 28px rgba(0,238,208,.3);
-  mix-blend-mode:screen;transition:transform .15s;}
-#cur-ring{width:38px;height:38px;border-radius:50%;
-  border:1.5px solid rgba(0,238,208,.35);
-  position:fixed;pointer-events:none;z-index:9998;transition:all .22s ease;}
+/* ═══ CURSOR ══════════════════════════════════ */
+.cur { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); position: fixed; pointer-events: none; z-index: 9999; transition: transform .2s, opacity .2s; }
+.cur-r { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid rgba(1,151,175,.4); position: fixed; pointer-events: none; z-index: 9998; transition: all .25s ease; }
+@media (hover: none) { .cur, .cur-r { display: none; } }
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:300;
-  padding:20px 72px;
-  display:flex;align-items:center;justify-content:space-between;
-  transition:all .5s;
+/* ═══ NAV ════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  transition: all .4s ease;
 }
-nav.dark{
-  background:rgba(4,16,46,.94);
-  backdrop-filter:blur(28px);
-  border-bottom:1px solid rgba(1,151,175,.12);
-  padding:14px 72px;
+nav.scrolled {
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 20px rgba(0,0,0,.06);
 }
-.logo-a{display:flex;align-items:center;gap:11px;text-decoration:none;}
-.logo-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:26px;font-weight:600;color:var(--white);letter-spacing:-.3px;
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-mark { width: 32px; height: 32px; }
+.nav-logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 600;
+  color: var(--ink); letter-spacing: -.3px;
 }
-.logo-name em{font-style:italic;color:var(--mint);}
-.logo-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(0,238,208,.45);display:block;margin-top:1px;}
-nav ul{list-style:none;display:flex;gap:40px;}
-nav ul a{text-decoration:none;color:rgba(255,255,255,.5);font-size:13.5px;
-  font-weight:400;transition:color .3s;
-  padding-bottom:3px;border-bottom:1.5px solid transparent;}
-nav ul a:hover,nav ul a.on{color:var(--mint);border-color:var(--mint);}
-.nav-cta{
-  background:linear-gradient(135deg,var(--teal),var(--mint));
-  color:var(--navy);padding:10px 26px;border-radius:100px;
-  font-size:13px;font-weight:600;text-decoration:none;
-  transition:all .3s;box-shadow:0 0 20px rgba(0,238,208,.18);
+.nav-logo-name em { font-style: italic; color: var(--blue); }
+nav ul { list-style: none; display: flex; gap: 36px; }
+nav ul a {
+  font-size: 14px; font-weight: 400; color: var(--dim);
+  text-decoration: none; transition: color .25s;
 }
-.nav-cta:hover{box-shadow:0 0 40px rgba(0,238,208,.45);transform:translateY(-1px);}
+nav ul a:hover { color: var(--ink); }
+nav ul a.active { color: var(--ink); font-weight: 500; }
+.nav-btn {
+  font-size: 14px; font-weight: 500;
+  color: var(--white); background: var(--ink);
+  padding: 9px 22px; border-radius: 8px;
+  text-decoration: none;
+  transition: all .25s;
+  border: 1.5px solid var(--ink);
+}
+.nav-btn:hover { background: var(--blue); border-color: var(--blue); }
 
-/* ═══════════════════════════
-   HERO — MEDITERRANEAN NIGHT
-═══════════════════════════ */
-.hero{
-  position:relative;min-height:100vh;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;
-  padding:120px 48px 80px;
-  overflow:hidden;
-}
-
-/* Sky gradient — deep Tunisian night */
-.hero::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 120% 60% at 50% 0%,#061830 0%,transparent 55%),
-    radial-gradient(ellipse 80% 40% at 20% 100%,rgba(245,166,35,.06) 0%,transparent 50%),
-    radial-gradient(ellipse 80% 40% at 80% 100%,rgba(1,151,175,.07) 0%,transparent 50%),
-    linear-gradient(180deg,#010a1a 0%,#02153D 35%,#031c48 65%,#050e1e 100%);
+/* ═══ HERO ═══════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 100px 48px 60px;
+  background: var(--white);
+  position: relative;
+  gap: 80px;
 }
 
-/* CANVAS for animated cityscape */
-#cityCanvas{
-  position:absolute;bottom:0;left:0;right:0;
-  height:55%;pointer-events:none;z-index:1;
-  opacity:.85;
+/* Subtle background gradient */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 55%; height: 100%;
+  background: linear-gradient(135deg, #f0f9fb 0%, #e8f5f8 40%, #f5fbfd 100%);
+  z-index: 0;
 }
 
-/* Stars */
-#starCanvas{
-  position:absolute;inset:0;pointer-events:none;z-index:0;
+.hero-left { position: relative; z-index: 2; }
+.hero-right { position: relative; z-index: 2; }
+
+/* Eyebrow */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--blue);
+  margin-bottom: 24px;
+  opacity: 0; animation: fadeUp .6s ease .1s forwards;
+}
+.eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+@keyframes dotPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.6)} }
+
+/* Main headline */
+.hero-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 4.5vw, 64px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  color: var(--ink);
+  margin-bottom: 20px;
+  opacity: 0; animation: fadeUp .8s ease .3s forwards;
+}
+.hero-h1 em {
+  font-style: italic;
+  color: var(--blue);
+}
+.hero-h1 span {
+  position: relative;
+  display: inline-block;
+}
+.hero-h1 span::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--teal));
+  transform: scaleX(0); transform-origin: left;
+  animation: lineGrow 1s ease 1.2s forwards;
+}
+@keyframes lineGrow { to { transform: scaleX(1); } }
+
+/* Subheadline */
+.hero-sub {
+  font-size: 17px; font-weight: 400; color: var(--dim);
+  line-height: 1.75; max-width: 460px;
+  margin-bottom: 36px;
+  opacity: 0; animation: fadeUp .8s ease .5s forwards;
 }
 
-/* Water reflection shimmer */
-.water-reflection{
-  position:absolute;bottom:0;left:0;right:0;height:20%;
-  background:linear-gradient(180deg,transparent 0%,rgba(1,151,175,.04) 50%,rgba(0,238,208,.03) 100%);
-  z-index:2;
-  animation:waterShimmer 4s ease-in-out infinite alternate;
+/* CTA buttons */
+.hero-ctas {
+  display: flex; gap: 12px; align-items: center;
+  margin-bottom: 52px;
+  opacity: 0; animation: fadeUp .8s ease .7s forwards;
 }
-@keyframes waterShimmer{
-  0%{opacity:.6;}100%{opacity:1;}
+.cta-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 600; color: var(--white);
+  background: var(--blue);
+  padding: 14px 28px; border-radius: 10px;
+  text-decoration: none;
+  transition: all .3s;
+  box-shadow: 0 4px 20px rgba(1,151,175,.3);
 }
+.cta-primary:hover {
+  background: var(--blue-d);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(1,151,175,.4);
+}
+.cta-secondary {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 15px; font-weight: 500; color: var(--ink);
+  text-decoration: none; transition: all .3s;
+}
+.cta-secondary:hover { color: var(--blue); gap: 10px; }
+.cta-secondary svg { transition: transform .3s; }
+.cta-secondary:hover svg { transform: translateX(4px); }
 
-/* Floating particles */
-.particle{
-  position:absolute;border-radius:50%;
-  background:var(--mint);pointer-events:none;
-  animation:particleDrift linear infinite;
-  z-index:3;
+/* Trust line */
+.trust-line {
+  display: flex; align-items: center; gap: 20px;
+  opacity: 0; animation: fadeUp .8s ease .9s forwards;
 }
-@keyframes particleDrift{
-  0%{transform:translateY(0) translateX(0);opacity:0;}
-  10%{opacity:1;}
-  90%{opacity:.5;}
-  100%{transform:translateY(-100vh) translateX(var(--dx));opacity:0;}
-}
+.trust-sep { width: 1px; height: 16px; background: var(--line); }
+.trust-item { font-size: 12.5px; color: var(--dim); font-weight: 400; }
+.trust-item b { color: var(--ink); font-weight: 600; }
 
-/* Hero content */
-.hero-content{position:relative;z-index:10;}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:9px;
-  border:1px solid rgba(0,238,208,.25);
-  background:rgba(0,238,208,.07);
-  color:var(--mint);font-size:11px;font-weight:500;
-  letter-spacing:2px;text-transform:uppercase;
-  padding:8px 20px;border-radius:100px;
-  margin-bottom:36px;
-  opacity:0;animation:fadeUp .8s ease .3s forwards;
-}
-.bdot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--mint);box-shadow:0 0 10px var(--mint);
-  animation:bdotPulse 2s ease-in-out infinite;
-}
-@keyframes bdotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.8);opacity:.3}}
-
-.hero-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(50px,7vw,96px);
-  font-weight:600;
-  line-height:1;
-  letter-spacing:-2px;
-  margin-bottom:14px;
-  opacity:0;animation:fadeUp .9s ease .5s forwards;
-}
-.ht-l1{display:block;color:var(--white);}
-.ht-l2{
-  display:block;
-  background:linear-gradient(90deg,var(--teal) 0%,var(--mint) 40%,var(--sky) 80%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  background-size:200%;
-  animation:gradShift 5s ease-in-out infinite alternate;
-  font-style:italic;
-}
-@keyframes gradShift{0%{background-position:0%}100%{background-position:100%}}
-.ht-l3{display:block;color:rgba(255,255,255,.7);font-weight:300;font-style:italic;}
-.tw{color:var(--mint);}
-.tc{
-  display:inline-block;width:3px;height:.8em;
-  background:var(--mint);border-radius:2px;
-  vertical-align:middle;margin-left:2px;
-  animation:tcBlink .75s step-end infinite;
-}
-@keyframes tcBlink{0%,100%{opacity:1}50%{opacity:0}}
-
-.hero-sub{
-  font-size:18px;color:var(--dim);
-  font-weight:300;max-width:580px;
-  line-height:1.8;margin:22px auto 44px;
-  opacity:0;animation:fadeUp .9s ease .7s forwards;
-}
-
-.hero-btns{
-  display:flex;gap:16px;align-items:center;justify-content:center;
-  flex-wrap:wrap;
-  opacity:0;animation:fadeUp .9s ease .9s forwards;
-}
-.btn-p{
-  background:linear-gradient(135deg,var(--teal),var(--mint));
-  color:var(--navy);padding:16px 40px;border-radius:100px;
-  font-size:15px;font-weight:600;text-decoration:none;
-  transition:all .3s;
-  box-shadow:0 0 36px rgba(0,238,208,.28);
-  display:inline-flex;align-items:center;gap:9px;
-}
-.btn-p:hover{box-shadow:0 0 60px rgba(0,238,208,.55);transform:translateY(-2px);}
-.btn-g{
-  color:rgba(255,255,255,.65);padding:16px 36px;border-radius:100px;
-  font-size:15px;font-weight:400;text-decoration:none;
-  border:1.5px solid rgba(255,255,255,.18);
-  transition:all .3s;display:inline-flex;align-items:center;gap:8px;
-}
-.btn-g:hover{border-color:var(--mint);color:var(--mint);}
-
-/* ── LIVE DASHBOARD FLOAT ── */
-.dash-float{
-  position:relative;z-index:10;
-  margin-top:60px;max-width:900px;
-  margin-left:auto;margin-right:auto;
-  opacity:0;animation:fadeUp 1.2s ease 1.1s forwards;
-  perspective:1400px;
-}
-.dash-shell{
-  background:rgba(4,16,46,.88);
-  border:1px solid rgba(1,151,175,.28);
-  border-radius:22px;
-  backdrop-filter:blur(24px);
+/* ═══ HERO VISUAL — Dashboard Card ══════════ */
+.dash-card {
+  background: var(--white);
+  border-radius: 18px;
   box-shadow:
-    0 50px 120px rgba(0,0,0,.6),
-    0 0 0 1px rgba(0,238,208,.06),
-    inset 0 1px 0 rgba(255,255,255,.06);
-  transform:rotateX(10deg) rotateY(-1deg) scale(.97);
-  transform-style:preserve-3d;
-  transition:transform .8s cubic-bezier(.23,1,.32,1);
-  overflow:hidden;
+    0 2px 8px rgba(0,0,0,.04),
+    0 12px 40px rgba(0,0,0,.1),
+    0 40px 80px rgba(0,0,0,.06);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  opacity: 0; animation: slideUp 1s ease .8s forwards;
+  transform-style: preserve-3d;
+  transition: transform .6s ease;
 }
-.dash-float:hover .dash-shell{
-  transform:rotateX(2deg) rotateY(0deg) scale(1);
-}
-.dash-bar{
-  background:rgba(2,13,36,.95);
-  padding:12px 20px;
-  display:flex;align-items:center;gap:10px;
-  border-bottom:1px solid rgba(1,151,175,.12);
-}
-.dots{display:flex;gap:6px;}
-.dot{width:10px;height:10px;border-radius:50%;}
-.dot.r{background:#ff5f56;}.dot.y{background:#ffbd2e;}.dot.g{background:#27c93f;}
-.dtab{font-size:11px;color:rgba(255,255,255,.35);padding:3px 12px;
-  border-radius:6px;background:rgba(1,151,175,.08);
-  border:1px solid rgba(1,151,175,.12);}
-.dtab.on{color:var(--mint);background:rgba(0,238,208,.08);border-color:rgba(0,238,208,.2);}
-.dtitle{font-size:11px;color:rgba(255,255,255,.18);margin-left:auto;}
+.dash-card:hover { transform: translateY(-4px) rotateX(1deg); }
+@keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
-/* Dashboard live area */
-.dash-live{padding:18px;display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;gap:14px;}
-.dcard{
-  background:rgba(2,21,61,.65);
-  border:1px solid rgba(1,151,175,.15);
-  border-radius:14px;padding:15px;
-  transition:border-color .3s;
+.dash-header {
+  padding: 14px 18px;
+  background: var(--ink);
+  display: flex; align-items: center; gap: 10px;
 }
-.dcard:hover{border-color:rgba(0,238,208,.3);}
-.dlabel{font-size:10px;color:rgba(255,255,255,.32);
-  text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;}
-.dval{
-  font-family:'Cormorant Garamond',serif;
-  font-size:30px;font-weight:700;color:var(--white);line-height:1;
+.dash-dots { display: flex; gap: 5px; }
+.dd { width: 10px; height: 10px; border-radius: 50%; }
+.dd1{background:#ff5f56}.dd2{background:#ffbd2e}.dd3{background:#27c93f}
+.dash-header-title {
+  font-size: 11px; color: rgba(255,255,255,.4);
+  margin-left: auto; font-weight: 400; letter-spacing: .3px;
 }
-.dval.grad{
-  background:linear-gradient(135deg,var(--teal),var(--mint));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
+.dash-tabs {
+  display: flex; gap: 1px; margin-left: 12px;
 }
-.dchange{font-size:11px;color:#27c93f;margin-top:4px;display:flex;align-items:center;gap:3px;}
-.dchange.red{color:#ff5f56;}
+.dash-tab {
+  font-size: 11px; color: rgba(255,255,255,.4);
+  padding: 3px 10px; border-radius: 5px;
+  background: rgba(255,255,255,.05);
+}
+.dash-tab.on {
+  background: rgba(1,151,175,.25);
+  color: var(--teal);
+}
 
-/* Live bar chart */
-.barchart{display:flex;align-items:flex-end;gap:4px;height:36px;margin-top:10px;}
-.bar{flex:1;background:rgba(1,151,175,.12);border-radius:3px 3px 0 0;
-  position:relative;overflow:hidden;}
-.bar::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;
-  background:linear-gradient(0deg,var(--teal),var(--mint));
-  border-radius:3px 3px 0 0;
-  height:0;animation:barUp 1.8s cubic-bezier(.23,1,.32,1) forwards;
-  animation-delay:var(--d);
-}
-@keyframes barUp{to{height:var(--h)}}
-.bar1{--h:30%;--d:1.2s}.bar2{--h:48%;--d:1.3s}.bar3{--h:62%;--d:1.4s}
-.bar4{--h:77%;--d:1.5s}.bar5{--h:94%;--d:1.6s}.bar6{--h:71%;--d:1.7s}.bar7{--h:55%;--d:1.8s}
+.dash-body { padding: 16px; }
 
-/* AI insight card in dash */
-.dai{
-  background:linear-gradient(135deg,rgba(75,34,122,.45),rgba(1,151,175,.2));
-  border:1px solid rgba(75,34,122,.45);border-radius:14px;padding:15px;
+/* KPI row */
+.kpi-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 14px; }
+.kpi {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  transition: border-color .3s;
 }
-.dai-tag{
-  font-size:10px;color:var(--mint);letter-spacing:1.2px;
-  text-transform:uppercase;display:flex;align-items:center;gap:7px;margin-bottom:8px;
+.kpi:hover { border-color: rgba(1,151,175,.3); }
+.kpi-label { font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 6px; }
+.kpi-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700; color: var(--ink); line-height: 1;
 }
-.dai-tag::before{
-  content:'';width:7px;height:7px;border-radius:50%;
-  background:var(--mint);box-shadow:0 0 8px var(--mint);
-  animation:bdotPulse 2s infinite;
+.kpi-val.blue {
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-.dai p{font-size:12px;color:rgba(255,255,255,.65);line-height:1.55;}
-.dai strong{color:var(--mint);}
+.kpi-change { font-size: 11px; color: #27c93f; margin-top: 3px; }
 
-/* Booking rows */
-.dash-book{padding:0 18px 18px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.blist{background:rgba(2,21,61,.65);border:1px solid rgba(1,151,175,.15);border-radius:14px;padding:14px;}
-.blist-t{font-size:10px;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
-.brow{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);}
-.brow:last-child{border-bottom:none;}
-.bav{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--white);flex-shrink:0;}
-.bname{font-size:12px;font-weight:600;color:var(--white);}
-.bdate{font-size:10px;color:rgba(255,255,255,.3);}
-.bamt{font-size:12px;font-weight:700;color:var(--mint);margin-left:auto;margin-right:6px;}
-.bbadge{font-size:9px;padding:2px 7px;border-radius:100px;font-weight:600;}
-.bc{background:rgba(39,201,63,.12);color:#27c93f;}
-.bp{background:rgba(255,189,46,.12);color:#ffbd2e;}
+/* Mini bar chart */
+.chart-wrap { margin-bottom: 14px; }
+.chart-label { font-size: 10px; color: var(--dim); margin-bottom: 8px; letter-spacing: .3px; }
+.bars { display: flex; align-items: flex-end; gap: 4px; height: 44px; }
+.bar-item { flex: 1; border-radius: 3px 3px 0 0; position: relative; overflow: hidden; background: var(--line); }
+.bar-fill {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(0deg, var(--blue), var(--teal));
+  border-radius: 3px 3px 0 0;
+  animation: barGrow 1.5s ease forwards; animation-delay: var(--d);
+}
+@keyframes barGrow { from{height:0} to{height:var(--h)} }
 
-/* Whatsapp stat */
-.wstat{background:rgba(2,21,61,.65);border:1px solid rgba(1,151,175,.15);border-radius:14px;padding:14px;}
+/* Booking list */
+.booking-label { font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px; }
+.booking-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.booking-row:last-child { border: none; }
+.b-av {
+  width: 28px; height: 28px; border-radius: 50%;
+  font-size: 10px; font-weight: 700; color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.b-name { font-size: 12px; font-weight: 500; color: var(--ink); }
+.b-date { font-size: 10px; color: var(--dim); }
+.b-info { flex: 1; }
+.b-amt { font-size: 12px; font-weight: 600; color: var(--blue); }
+.b-badge {
+  font-size: 9px; font-weight: 600;
+  padding: 2px 7px; border-radius: 100px;
+}
+.bc { background: rgba(39,201,63,.1); color: #1a9e30; }
+.bp { background: rgba(255,189,46,.12); color: #b8922a; }
+
+/* AI insight card */
+.ai-card {
+  background: linear-gradient(135deg, rgba(1,151,175,.06), rgba(0,196,184,.04));
+  border: 1px solid rgba(1,151,175,.15);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 10px;
+}
+.ai-label {
+  font-size: 10px; font-weight: 600; color: var(--blue);
+  letter-spacing: 1px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 5px;
+}
+.ai-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); animation: dotPulse 2s infinite; }
+.ai-text { font-size: 12px; color: var(--ink); line-height: 1.5; font-weight: 400; }
+.ai-text b { color: var(--blue); }
 
 /* Floating notification */
-.fnotif{
-  position:absolute;bottom:-12px;right:20px;
-  background:rgba(4,16,46,.95);
-  border:1px solid rgba(0,238,208,.22);
-  border-radius:16px;padding:13px 18px;
-  display:flex;align-items:center;gap:12px;
-  backdrop-filter:blur(20px);
-  box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 20px rgba(0,238,208,.08);
-  animation:notifIn 1s ease 2.2s both,notifFloat 5s ease-in-out 3.2s infinite;
-  z-index:20;white-space:nowrap;
+.notif {
+  position: absolute;
+  bottom: -20px; right: -20px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  animation: slideUp 1s ease 2s both, floatN 4s ease-in-out 3s infinite;
+  white-space: nowrap;
 }
-@keyframes notifIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-@keyframes notifFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.nic{width:34px;height:34px;border-radius:10px;background:rgba(39,201,63,.12);
-  border:1px solid rgba(39,201,63,.2);display:flex;align-items:center;justify-content:center;font-size:15px;}
-.nt{font-size:12px;font-weight:600;color:var(--white);}
-.ns{font-size:10px;color:rgba(255,255,255,.4);}
+@keyframes floatN { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+.notif-icon {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: rgba(39,201,63,.1);
+  border: 1px solid rgba(39,201,63,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.notif-title { font-size: 12px; font-weight: 600; color: var(--ink); }
+.notif-sub { font-size: 10px; color: var(--dim); }
 
-/* ── TICKER ── */
-.ticker{
-  overflow:hidden;height:38px;
-  border-top:1px solid rgba(1,151,175,.12);
-  border-bottom:1px solid rgba(1,151,175,.12);
-  background:rgba(2,21,61,.5);
-  position:relative;z-index:10;
+/* ═══ TICKER ══════════════════════════════════ */
+.ticker {
+  background: var(--ink);
+  overflow: hidden; height: 38px;
+  display: flex; align-items: center;
 }
-.ticker-t{
-  display:flex;gap:64px;align-items:center;
-  height:100%;white-space:nowrap;
-  animation:tickR 32s linear infinite;
+.ticker-inner {
+  display: flex; gap: 60px; align-items: center;
+  white-space: nowrap;
+  animation: tickScroll 28s linear infinite;
 }
-.ti{font-size:11px;color:rgba(255,255,255,.38);
-  display:flex;align-items:center;gap:8px;letter-spacing:.3px;}
-.ti span{color:var(--mint);}
-.ti-dot{width:4px;height:4px;border-radius:50%;background:rgba(1,151,175,.5);}
-@keyframes tickR{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item {
+  font-size: 12px; color: rgba(255,255,255,.5);
+  display: flex; align-items: center; gap: 8px;
+}
+.ticker-item strong { color: var(--teal); font-weight: 500; }
+.ticker-sep { color: rgba(255,255,255,.2); }
+@keyframes tickScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-/* ═══════════════════════════
-   PROBLEM → SOLUTION REVEAL
-═══════════════════════════ */
-.ps-sec{
-  padding:110px 72px;position:relative;overflow:hidden;
-}
-.ps-sec::before{
-  content:'';position:absolute;top:0;left:0;right:0;
-  height:1px;background:linear-gradient(90deg,transparent,rgba(1,151,175,.4),transparent);
-}
-.ps-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:80px;align-items:center;margin-top:64px;
-}
-.sl{font-size:11px;font-weight:500;letter-spacing:2.5px;
-  text-transform:uppercase;color:var(--mint);
-  display:flex;align-items:center;gap:12px;margin-bottom:18px;}
-.sl::before{content:'';width:32px;height:1px;background:var(--mint);}
-.stitle{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(32px,4vw,54px);
-  font-weight:600;line-height:1.08;
-  letter-spacing:-1px;color:var(--white);margin-bottom:18px;
-}
-.stitle em{font-style:italic;background:linear-gradient(90deg,var(--teal),var(--mint));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.sbody{font-size:16px;color:var(--dim);font-weight:300;line-height:1.82;}
+/* ═══ DIVIDER ═════════════════════════════════ */
+.divider { height: 1px; background: var(--line); margin: 0; }
 
-/* Animated comparison */
-.comp-box{border-radius:20px;padding:28px;margin-bottom:14px;
-  transition:all .4s;position:relative;overflow:hidden;}
-.comp-box::before{content:'';position:absolute;inset:0;opacity:.04;
-  background:repeating-linear-gradient(45deg,currentColor 0,currentColor 1px,transparent 0,transparent 50%);
-  background-size:8px 8px;}
-.comp-bad{background:rgba(255,95,86,.05);border:1px solid rgba(255,95,86,.22);color:#ff5f56;}
-.comp-good{background:rgba(0,238,208,.04);border:1px solid rgba(0,238,208,.22);color:var(--mint);}
-.comp-label{font-size:11px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;
-  display:flex;align-items:center;gap:8px;margin-bottom:16px;}
-.ci{display:flex;align-items:flex-start;gap:11px;padding:9px 0;
-  border-bottom:1px solid rgba(255,255,255,.05);
-  font-size:14px;color:rgba(255,255,255,.52);font-weight:300;line-height:1.5;}
-.ci:last-child{border-bottom:none;}
-.ci svg{flex-shrink:0;margin-top:2px;}
-
-/* Stat pills */
-.spills{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px;}
-.spill{
-  background:rgba(2,21,61,.75);border:1px solid rgba(1,151,175,.22);
-  border-radius:14px;padding:14px 20px;
-  display:flex;align-items:center;gap:12px;
-  transition:all .3s;cursor:default;
+/* ═══ SHARED SECTION STYLES ═══════════════════ */
+.section { padding: 96px 48px; }
+.section-label {
+  font-size: 12px; font-weight: 600; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--blue);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px;
 }
-.spill:hover{border-color:rgba(0,238,208,.4);box-shadow:0 0 24px rgba(0,238,208,.1);transform:translateY(-2px);}
-.sn{
-  font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;
-  background:linear-gradient(135deg,var(--teal),var(--mint));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  line-height:1;
+.section-label::before { content: ''; width: 24px; height: 1.5px; background: var(--blue); }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 700; line-height: 1.12;
+  letter-spacing: -1px; color: var(--ink);
+  margin-bottom: 14px;
 }
-.slb{font-size:12px;color:rgba(255,255,255,.42);font-weight:300;line-height:1.4;}
-.sle{font-size:10px;color:rgba(0,238,208,.55);display:block;margin-top:2px;}
-
-/* ═══════════════════════════
-   HOW IT WORKS — FLOW
-═══════════════════════════ */
-.how-sec{
-  padding:110px 72px;
-  background:rgba(2,21,61,.25);
-  position:relative;overflow:hidden;
-}
-.how-sec::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(1,151,175,.05),transparent);
-}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:64px;position:relative;}
-.steps::after{
-  content:'';position:absolute;top:42px;
-  left:calc(16.5% + 44px);right:calc(16.5% + 44px);
-  height:1px;background:rgba(1,151,175,.18);
-}
-.flow-beam{
-  position:absolute;top:42px;
-  left:calc(16.5% + 44px);right:calc(16.5% + 44px);
-  height:1px;overflow:hidden;z-index:1;
-}
-.flow-beam::after{
-  content:'';position:absolute;top:0;height:100%;
-  width:50%;background:linear-gradient(90deg,transparent,var(--mint),transparent);
-  animation:beam 3s ease-in-out infinite;
-}
-@keyframes beam{0%{left:-50%}100%{left:150%}}
-.step{
-  display:flex;flex-direction:column;align-items:center;
-  text-align:center;padding:0 32px;position:relative;z-index:2;
-}
-.step-ring{
-  position:relative;width:84px;height:84px;margin-bottom:26px;
-}
-.step-c{
-  width:84px;height:84px;border-radius:50%;
-  background:rgba(4,16,46,.95);
-  border:2px solid rgba(1,151,175,.28);
-  display:flex;align-items:center;justify-content:center;
-  transition:all .5s;cursor:default;
-}
-.step-c:hover{
-  border-color:var(--mint);
-  box-shadow:0 0 0 8px rgba(0,238,208,.06),0 0 40px rgba(0,238,208,.2);
-}
-.step-c:hover svg{filter:drop-shadow(0 0 8px var(--mint));}
-.step-n{
-  position:absolute;top:-4px;right:-4px;
-  width:24px;height:24px;border-radius:50%;
-  background:linear-gradient(135deg,var(--teal),var(--mint));
-  color:var(--navy);font-size:11px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-}
-.step h3{
-  font-family:'Cormorant Garamond',serif;
-  font-size:22px;font-weight:600;color:var(--white);
-  margin-bottom:10px;letter-spacing:-.3px;
-}
-.step p{font-size:14px;color:var(--dim);line-height:1.7;font-weight:300;}
-
-/* ═══════════════════════════
-   ABOUT — ANIMATED CARDS
-═══════════════════════════ */
-.about-sec{padding:110px 72px;position:relative;}
-.about-sec::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(1,151,175,.4),transparent);
-}
-.about-inner{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:80px;align-items:center;
+.section-title em { font-style: italic; color: var(--blue); }
+.section-body {
+  font-size: 16px; color: var(--dim); font-weight: 400;
+  line-height: 1.78; max-width: 520px;
 }
 
-/* Big quote — the only "long text" */
-.about-quote{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(28px,3.5vw,44px);
-  font-weight:300;
-  font-style:italic;
-  line-height:1.3;
-  color:var(--white);
-  position:relative;
-}
-.about-quote::before{
-  content:'"';
-  font-size:120px;
-  color:rgba(0,238,208,.12);
-  position:absolute;
-  top:-40px;left:-20px;
-  line-height:1;
-  font-family:'Cormorant Garamond',serif;
-}
-.about-quote em{color:var(--mint);font-style:italic;}
-.about-quote span{display:block;margin-top:20px;
-  font-family:'DM Sans',sans-serif;font-size:14px;
-  font-style:normal;color:rgba(255,255,255,.35);font-weight:300;
-  letter-spacing:.5px;}
+/* ═══ THE PROBLEM SECTION ══════════════════════ */
+.problem-section { background: var(--bg); padding: 96px 48px; }
+.problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; margin-top: 56px; }
 
-/* Animated value cards — scroll in one by one */
-.aval-grid{display:flex;flex-direction:column;gap:14px;}
-.aval{
-  display:flex;align-items:flex-start;gap:16px;
-  padding:20px 22px;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:16px;
-  transition:all .4s;cursor:default;
-  position:relative;overflow:hidden;
+.compare-box { border-radius: 16px; padding: 28px; }
+.compare-bad {
+  background: #fff9f8;
+  border: 1px solid rgba(224,112,80,.2);
 }
-.aval::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
-  background:linear-gradient(180deg,var(--teal),var(--mint));
-  transform:scaleY(0);transform-origin:bottom;
-  transition:transform .4s;
+.compare-good {
+  background: #f5fcfc;
+  border: 1px solid rgba(1,151,175,.2);
 }
-.aval:hover{border-color:rgba(0,238,208,.28);transform:translateX(4px);}
-.aval:hover::before{transform:scaleY(1);}
-.aval-ic{
-  width:42px;height:42px;border-radius:12px;flex-shrink:0;
-  background:rgba(0,238,208,.08);border:1px solid rgba(0,238,208,.18);
-  display:flex;align-items:center;justify-content:center;
-  transition:all .3s;
+.compare-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
 }
-.aval:hover .aval-ic{background:rgba(0,238,208,.16);box-shadow:0 0 20px rgba(0,238,208,.18);}
-.aval-title{font-size:15px;font-weight:600;color:var(--white);margin-bottom:4px;}
-.aval-desc{font-size:13px;color:var(--dim);font-weight:300;line-height:1.55;}
+.compare-title.bad { color: #c45a38; }
+.compare-title.good { color: var(--blue); }
+.compare-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0; border-bottom: 1px solid rgba(0,0,0,.05);
+  font-size: 13.5px; color: var(--ink); line-height: 1.5; font-weight: 400;
+}
+.compare-item:last-child { border: none; }
+.compare-item svg { flex-shrink: 0; margin-top: 2px; }
+.compare-divider { height: 14px; }
 
-/* Flag row */
-.flag-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px;}
-.flag{font-size:12px;color:rgba(255,255,255,.4);
-  padding:4px 12px;border-radius:100px;
-  border:1px solid rgba(255,255,255,.09);
-  background:rgba(255,255,255,.04);
-  transition:all .3s;}
-.flag:hover{border-color:rgba(0,238,208,.25);color:rgba(0,238,208,.7);}
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 36px; }
+.stat-box {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  transition: all .3s;
+}
+.stat-box:hover { border-color: rgba(1,151,175,.3); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(1,151,175,.08); }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px; font-weight: 700;
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1; margin-bottom: 6px;
+}
+.stat-label { font-size: 12px; color: var(--dim); line-height: 1.4; }
 
-/* ═══════════════════════════
-   FEATURES — NEON GLOW GRID
-═══════════════════════════ */
-.feat-sec{
-  padding:110px 72px;
-  background:rgba(2,21,61,.3);
-  position:relative;overflow:hidden;
+/* ═══ HOW IT WORKS ═══════════════════════════ */
+.how-section { background: var(--white); padding: 96px 48px; }
+.steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 56px; background: var(--line); border-radius: 16px; overflow: hidden; }
+.step {
+  background: var(--white);
+  padding: 40px 32px;
+  transition: all .4s;
+  position: relative; overflow: hidden;
 }
-.feat-sec::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 55% 45% at 15% 50%,rgba(1,151,175,.06),transparent),
-    radial-gradient(ellipse 45% 55% at 85% 30%,rgba(75,34,122,.07),transparent);
+.step::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--teal));
+  transform: scaleX(0); transition: transform .4s;
 }
-.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:60px;}
-.fcard{
-  position:relative;padding:32px 28px;border-radius:18px;
-  background:var(--card);border:1px solid var(--border);
-  cursor:default;transition:all .4s;overflow:hidden;
-  backdrop-filter:blur(14px);
+.step:hover { background: var(--accent); }
+.step:hover::after { transform: scaleX(1); }
+.step-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px; font-weight: 700;
+  color: rgba(1,151,175,.1); line-height: 1; margin-bottom: 16px;
 }
-/* Neon glow border on hover */
-.fcard::before{
-  content:'';position:absolute;inset:0;border-radius:18px;padding:1px;
-  background:linear-gradient(135deg,var(--mint),var(--teal),var(--purple));
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  opacity:0;transition:opacity .4s;
+.step-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--accent); border: 1px solid rgba(1,151,175,.15);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px; transition: all .3s;
 }
-/* Bottom color glow */
-.fcard::after{
-  content:'';position:absolute;bottom:-44px;left:50%;
-  transform:translateX(-50%);
-  width:100px;height:50px;border-radius:50%;
-  filter:blur(24px);opacity:0;transition:opacity .4s;
-}
-.fcard:hover::before{opacity:1;}
-.fcard:hover::after{opacity:1;}
-.fcard:hover{transform:translateY(-6px);box-shadow:0 28px 64px rgba(0,0,0,.4);}
-/* Individual glow colors */
-.f1::after{background:var(--mint);}
-.f2::after{background:var(--teal);}
-.f3::after{background:var(--purple);}
-.f4::after{background:var(--mint);}
-.f5::after{background:var(--teal);}
-.f6::after{background:var(--purple);}
+.step:hover .step-icon { background: rgba(1,151,175,.15); box-shadow: 0 0 16px rgba(1,151,175,.15); }
+.step h3 { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 10px; line-height: 1.3; }
+.step p { font-size: 14px; color: var(--dim); line-height: 1.7; font-weight: 400; }
 
-.fic{
-  width:48px;height:48px;border-radius:14px;
-  background:rgba(0,238,208,.08);border:1px solid rgba(0,238,208,.18);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:18px;transition:all .3s;
+/* ═══ FEATURES ═══════════════════════════════ */
+.feat-section { background: var(--bg); padding: 96px 48px; }
+.feat-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
+.feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.feat {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px; padding: 32px 28px;
+  transition: all .4s;
+  position: relative; overflow: hidden;
 }
-.fcard:hover .fic{background:rgba(0,238,208,.16);box-shadow:0 0 22px rgba(0,238,208,.22);}
-.fcard h3{
-  font-family:'Cormorant Garamond',serif;
-  font-size:20px;font-weight:600;color:var(--white);
-  margin-bottom:9px;letter-spacing:-.2px;
+.feat::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 160px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(1,151,175,.05), transparent);
+  opacity: 0; transition: opacity .4s;
 }
-.fcard p{font-size:13px;color:var(--dim);line-height:1.72;font-weight:300;}
-.ftag{
-  display:inline-block;margin-top:12px;font-size:10px;
-  padding:3px 10px;border-radius:100px;
-  background:rgba(0,238,208,.08);color:var(--mint);
-  letter-spacing:.5px;border:1px solid rgba(0,238,208,.18);
+.feat:hover { border-color: rgba(1,151,175,.25); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(1,151,175,.1); }
+.feat:hover::before { opacity: 1; }
+.feat-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--accent); border: 1px solid rgba(1,151,175,.15);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px; transition: all .3s;
+}
+.feat:hover .feat-icon { background: rgba(1,151,175,.15); box-shadow: 0 0 16px rgba(1,151,175,.12); }
+.feat h3 { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 9px; line-height: 1.3; }
+.feat p { font-size: 13.5px; color: var(--dim); line-height: 1.7; font-weight: 400; }
+.feat-badge {
+  display: inline-block; margin-top: 14px;
+  font-size: 10px; font-weight: 600; padding: 3px 10px;
+  border-radius: 100px; letter-spacing: .5px;
+  background: rgba(1,151,175,.08); color: var(--blue);
+  border: 1px solid rgba(1,151,175,.15);
 }
 
-/* ═══════════════════════════
-   TESTIMONIALS — AUTO ROTATE
-═══════════════════════════ */
-.testi-sec{padding:110px 72px;}
-.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:60px;}
-.tcard{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:20px;padding:30px;
-  transition:all .4s;cursor:default;
-  position:relative;overflow:hidden;
-}
-.tcard::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(1,151,175,.04),transparent);
-  opacity:0;transition:opacity .4s;
-}
-.tcard:hover{border-color:rgba(0,238,208,.22);transform:translateY(-4px);box-shadow:0 24px 55px rgba(0,0,0,.35);}
-.tcard:hover::before{opacity:1;}
-.tstars{
-  font-size:13px;letter-spacing:2px;margin-bottom:14px;
-  background:linear-gradient(90deg,var(--teal),var(--mint));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.ttext{
-  font-family:'Cormorant Garamond',serif;
-  font-size:16px;font-style:italic;
-  color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:20px;
-}
-.tauthor{display:flex;align-items:center;gap:11px;}
-.tav{
-  width:38px;height:38px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:700;color:var(--white);flex-shrink:0;
-}
-.tname{font-size:13px;font-weight:600;color:var(--white);}
-.trole{font-size:11px;color:var(--dim);}
+/* ═══ ABOUT ══════════════════════════════════ */
+.about-section { background: var(--white); padding: 96px 48px; }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 
-/* ═══════════════════════════
-   CTA — FULL WIDTH IMPACT
-═══════════════════════════ */
-.cta-sec{
-  padding:150px 60px;text-align:center;
-  position:relative;overflow:hidden;
+.about-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 400; font-style: italic;
+  line-height: 1.4; color: var(--ink);
+  padding-left: 24px;
+  border-left: 3px solid var(--blue);
+  margin-bottom: 24px;
 }
-/* Animated radial glow */
-.cta-sec::before{
-  content:'';position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:800px;height:500px;
-  background:radial-gradient(ellipse,rgba(0,238,208,.1) 0%,transparent 65%);
-  animation:ctaGlow 4s ease-in-out infinite alternate;
-}
-@keyframes ctaGlow{
-  0%{opacity:.6;transform:translate(-50%,-50%) scale(1);}
-  100%{opacity:1;transform:translate(-50%,-50%) scale(1.1);}
-}
-/* Horizontal lines */
-.cta-sec::after{
-  content:'';position:absolute;top:50%;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(1,151,175,.15) 20%,rgba(0,238,208,.15) 50%,rgba(1,151,175,.15) 80%,transparent);
-}
-.cta-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(40px,6vw,80px);
-  font-weight:600;letter-spacing:-2px;
-  line-height:1.02;color:var(--white);
-  margin-bottom:22px;position:relative;z-index:2;
-}
-.cta-title em{
-  font-style:italic;
-  background:linear-gradient(90deg,var(--teal),var(--mint));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.cta-sub{
-  font-size:18px;color:var(--dim);
-  max-width:460px;margin:0 auto 52px;
-  line-height:1.78;font-weight:300;position:relative;z-index:2;
-}
-.cta-btns{
-  display:flex;gap:16px;justify-content:center;
-  flex-wrap:wrap;position:relative;z-index:2;
-}
-.trust-line{
-  margin-top:28px;font-size:13px;color:rgba(255,255,255,.28);
-  position:relative;z-index:2;
-}
-.trust-line span{color:rgba(0,238,208,.5);}
+.about-quote em { color: var(--blue); }
+.about-source { font-size: 13px; color: var(--dim); padding-left: 24px; }
 
-/* ── FOOTER ── */
-footer{
-  background:#020b1a;
-  border-top:1px solid rgba(1,151,175,.1);
-  padding:38px 72px;
-  display:flex;align-items:center;justify-content:space-between;
+.about-flags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 28px; padding-left: 24px; }
+.aflag {
+  font-size: 12px; color: var(--dim);
+  padding: 4px 12px; border-radius: 100px;
+  border: 1px solid var(--line); background: var(--bg);
+  transition: all .3s;
 }
-.fl{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.fln{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;
-  color:rgba(255,255,255,.55);}
-.fln em{font-style:italic;color:var(--mint);}
-footer span{font-size:12px;color:rgba(255,255,255,.2);font-weight:300;}
-.fmail{font-size:12px;color:rgba(0,238,208,.45);text-decoration:none;transition:color .3s;}
-.fmail:hover{color:var(--mint);}
+.aflag:hover { border-color: rgba(1,151,175,.3); color: var(--blue); }
 
-/* ── REVEAL ── */
-.r{opacity:0;transform:translateY(30px);transition:opacity .85s ease,transform .85s ease;}
-.r.in{opacity:1;transform:translateY(0);}
-.r2{transition-delay:.12s;}.r3{transition-delay:.24s;}
-.r4{transition-delay:.36s;}.r5{transition-delay:.48s;}.r6{transition-delay:.6s;}
+.about-values { display: flex; flex-direction: column; gap: 12px; }
+.about-val {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px 20px;
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 14px; transition: all .35s;
+  position: relative; overflow: hidden;
+}
+.about-val::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--blue), var(--teal));
+  transform: scaleY(0); transform-origin: bottom; transition: transform .35s;
+}
+.about-val:hover { border-color: rgba(1,151,175,.2); transform: translateX(4px); }
+.about-val:hover::before { transform: scaleY(1); }
+.av-icon {
+  width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+  background: var(--accent); border: 1px solid rgba(1,151,175,.15);
+  display: flex; align-items: center; justify-content: center;
+}
+.av-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.av-desc { font-size: 13px; color: var(--dim); font-weight: 400; line-height: 1.5; }
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+/* ═══ TESTIMONIALS ═══════════════════════════ */
+.testi-section { background: var(--bg); padding: 96px 48px; }
+.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; }
+.testi {
+  background: var(--white); border: 1px solid var(--line);
+  border-radius: 16px; padding: 28px;
+  transition: all .4s;
+}
+.testi:hover { border-color: rgba(1,151,175,.2); transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,.07); }
+.testi-stars { color: #f5a623; font-size: 14px; letter-spacing: 2px; margin-bottom: 14px; }
+.testi-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 15.5px; font-style: italic;
+  color: var(--ink); line-height: 1.68; margin-bottom: 20px;
+}
+.testi-author { display: flex; align-items: center; gap: 10px; }
+.testi-av {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: var(--white); flex-shrink: 0;
+}
+.testi-name { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.testi-role { font-size: 12px; color: var(--dim); }
 
-/* ── MOBILE ── */
-@media(max-width:960px){
-  nav{padding:14px 20px;}nav ul{display:none;}
-  .nav-cta{padding:8px 18px;font-size:12px;}
-  .logo-tag{display:none;}
-  .hero{padding:100px 20px 60px;}
-  .hero-title{font-size:38px;letter-spacing:-1px;}
-  .hero-sub{font-size:15px;}
-  .dash-shell{transform:none!important;}
-  .dash-live{grid-template-columns:1fr 1fr;gap:10px;padding:12px;}
-  .dash-book{grid-template-columns:1fr;padding:0 12px 12px;}
-  .fnotif{display:none;}
-  .ps-sec,.how-sec,.about-sec,.feat-sec,.testi-sec,.cta-sec{padding:64px 20px;}
-  .ps-grid,.about-inner{grid-template-columns:1fr;gap:40px;}
-  .steps,.fgrid,.tgrid{grid-template-columns:1fr;gap:14px;}
-  .steps::after,.flow-beam{display:none;}
-  .step{padding:0 0 28px;}
-  footer{flex-direction:column;gap:12px;text-align:center;padding:26px 20px;}
+/* ═══ CTA ════════════════════════════════════ */
+.cta-section {
+  background: var(--ink);
+  padding: 96px 48px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(1,151,175,.12), transparent 70%);
+  pointer-events: none;
+}
+.cta-section::after {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 300px; height: 300px;
+  background: radial-gradient(ellipse, rgba(0,196,184,.08), transparent 70%);
+  pointer-events: none;
+}
+.cta-label {
+  font-size: 12px; font-weight: 600; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--teal);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin-bottom: 20px; position: relative; z-index: 2;
+}
+.cta-label::before { content: ''; width: 24px; height: 1.5px; background: var(--teal); }
+.cta-h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 700; letter-spacing: -1.5px;
+  line-height: 1.08; color: var(--white);
+  margin-bottom: 18px; position: relative; z-index: 2;
+}
+.cta-h2 em { font-style: italic; color: var(--teal); }
+.cta-p {
+  font-size: 17px; color: rgba(255,255,255,.5);
+  max-width: 420px; margin: 0 auto 44px;
+  line-height: 1.78; position: relative; z-index: 2;
+}
+.cta-btns { display: flex; gap: 14px; justify-content: center; position: relative; z-index: 2; }
+.cta-primary-inv {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 16px; font-weight: 600; color: var(--ink);
+  background: var(--white);
+  padding: 15px 36px; border-radius: 10px;
+  text-decoration: none; transition: all .3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,.2);
+}
+.cta-primary-inv:hover { background: var(--teal); color: var(--white); transform: translateY(-2px); }
+.cta-secondary-inv {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 16px; font-weight: 500; color: rgba(255,255,255,.6);
+  padding: 15px 28px; border-radius: 10px;
+  text-decoration: none; border: 1.5px solid rgba(255,255,255,.15);
+  transition: all .3s;
+}
+.cta-secondary-inv:hover { border-color: var(--teal); color: var(--teal); }
+.cta-trust {
+  margin-top: 24px; font-size: 13px;
+  color: rgba(255,255,255,.3);
+  position: relative; z-index: 2;
+}
+
+/* ═══ FOOTER ══════════════════════════════════ */
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 36px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.footer-logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 600;
+  color: rgba(255,255,255,.6);
+}
+.footer-logo-name em { font-style: italic; color: var(--teal); }
+footer span { font-size: 12px; color: rgba(255,255,255,.2); }
+footer a.fmail { font-size: 12px; color: rgba(0,196,184,.5); text-decoration: none; transition: color .3s; }
+footer a.fmail:hover { color: var(--teal); }
+
+/* ═══ REVEAL ══════════════════════════════════ */
+.r { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+.r.in { opacity: 1; transform: translateY(0); }
+.r2{transition-delay:.1s} .r3{transition-delay:.2s} .r4{transition-delay:.3s} .r5{transition-delay:.4s} .r6{transition-delay:.5s}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+/* ═══ MOBILE ══════════════════════════════════ */
+@media(max-width:900px){
+  nav { padding: 0 20px; }
+  nav ul { display: none; }
+  .nav-btn { padding: 8px 16px; font-size: 13px; }
+  .hero { grid-template-columns: 1fr; padding: 90px 20px 50px; gap: 40px; }
+  .hero::before { width: 100%; height: 50%; top: auto; bottom: 0; }
+  .hero-h1 { font-size: 36px; }
+  .hero-sub { font-size: 15px; }
+  .notif { display: none; }
+  .section, .problem-section, .how-section, .feat-section, .about-section, .testi-section, .cta-section { padding: 64px 20px; }
+  .problem-grid, .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .steps-grid, .feat-grid, .testi-grid { grid-template-columns: 1fr; gap: 14px; }
+  .feat-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 20px; }
 }
 </style>
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="cur-ring"></div>
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="cur-r"></div>
 
-<!-- ════ STAR CANVAS ════ -->
-<canvas id="starCanvas"></canvas>
-
-<!-- ════ NAV ════ -->
+<!-- ════════════ NAV ════════════ -->
 <nav id="nav">
-  <a href="index.html" class="logo-a">
-    <svg width="36" height="36" viewBox="0 0 38 38" fill="none">
-      <circle cx="19" cy="19" r="17" stroke="#0197AF" stroke-width="1.5" stroke-dasharray="3.5 2.5" opacity="0.5">
-        <animateTransform attributeName="transform" type="rotate" from="0 19 19" to="360 19 19" dur="20s" repeatCount="indefinite"/>
+  <a href="index.html" class="nav-logo">
+    <svg class="nav-logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="14.5" stroke="#0197AF" stroke-width="1.2" stroke-dasharray="3 2" opacity=".5">
+        <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="20s" repeatCount="indefinite"/>
       </circle>
-      <path d="M7 23 Q10 18 13 23 Q16 28 19 23 Q22 18 25 23 Q28 28 31 23" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="19" cy="14" r="5" fill="#0197AF" opacity="0.15"/>
-      <circle cx="19" cy="14" r="3" fill="#0197AF"/>
-      <circle cx="19" cy="14" r="1.3" fill="#00EED0">
-        <animate attributeName="opacity" values="1;.3;1" dur="2s" repeatCount="indefinite"/>
+      <path d="M6 19 Q8.5 14.5 11 19 Q13.5 23.5 16 19 Q18.5 14.5 21 19 Q23.5 23.5 26 19" stroke="#0197AF" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      <circle cx="16" cy="12" r="3.5" fill="#0197AF" opacity=".15"/>
+      <circle cx="16" cy="12" r="2.2" fill="#0197AF"/>
+      <circle cx="16" cy="12" r="1" fill="#00c4b8">
+        <animate attributeName="opacity" values="1;.3;1" dur="2.5s" repeatCount="indefinite"/>
       </circle>
     </svg>
-    <div>
-      <div class="logo-name">Med<em>Stay</em></div>
-      <span class="logo-tag">Hospitality Intelligence</span>
-    </div>
+    <span class="nav-logo-name">Med<em>Stay</em></span>
   </a>
   <ul>
-    <li><a href="index.html" class="on">Home</a></li>
+    <li><a href="index.html" class="active">Home</a></li>
     <li><a href="features.html">Features</a></li>
     <li><a href="pricing.html">Pricing</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
-  <a href="contact.html" class="nav-cta">Start free →</a>
+  <a href="contact.html" class="nav-btn">Start free trial</a>
 </nav>
 
-<!-- ════ HERO ════ -->
+<!-- ════════════ HERO ════════════ -->
 <section class="hero">
-  <canvas id="cityCanvas"></canvas>
-  <div class="water-reflection"></div>
-
-  <div class="hero-content">
-    <div class="hero-badge"><div class="bdot"></div>Smart Hospitality · Tunisia & Europe</div>
-
-    <h1 class="hero-title">
-      <span class="ht-l1">The platform that</span>
-      <span class="ht-l2">runs your hotel</span>
-      <span class="ht-l3">while you <span class="tw" id="tw">sleep</span><span class="tc"></span></span>
+  <div class="hero-left">
+    <div class="eyebrow"><div class="eyebrow-dot"></div>Guest Relationship Platform · Mediterranean</div>
+    <h1 class="hero-h1">
+      Your guests stay.<br>
+      <em>Then they come</em><br>
+      <span>back.</span>
     </h1>
-
-    <p class="hero-sub">MedStay replaces manual chaos with intelligent automation — bookings, pricing, and guest communication handled automatically. Built for independent hotels from Tunisia to Europe.</p>
-
-    <div class="hero-btns">
-      <a href="contact.html" class="btn-p">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        Start free — 30 days
+    <p class="hero-sub">MedStay gives independent hotels in Tunisia and Europe what Booking.com never will — permanent ownership of their guest relationships, with AI that tells you exactly when and how to use them.</p>
+    <div class="hero-ctas">
+      <a href="contact.html" class="cta-primary">
+        Start free trial
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-      <a href="#ps" class="btn-g">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+      <a href="#problem" class="cta-secondary">
         See how it works
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
+    <div class="trust-line">
+      <span class="trust-item"><b>30 days</b> free trial</span>
+      <div class="trust-sep"></div>
+      <span class="trust-item"><b>0%</b> commission taken</span>
+      <div class="trust-sep"></div>
+      <span class="trust-item">No credit card needed</span>
+    </div>
+  </div>
 
-    <!-- LIVE DASHBOARD -->
-    <div class="dash-float">
-      <div class="dash-shell">
-        <div class="dash-bar">
-          <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
-          <span class="dtab on">Dashboard</span>
-          <span class="dtab">Bookings</span>
-          <span class="dtab">Analytics</span>
-          <span class="dtitle">MedStay · Hotel Riviera, Sanremo</span>
+  <div class="hero-right" style="position:relative">
+    <div class="dash-card">
+      <div class="dash-header">
+        <div class="dash-dots"><div class="dd dd1"></div><div class="dd dd2"></div><div class="dd dd3"></div></div>
+        <div class="dash-tabs">
+          <div class="dash-tab on">Dashboard</div>
+          <div class="dash-tab">Guests</div>
+          <div class="dash-tab">Bookings</div>
         </div>
-        <div class="dash-live">
-          <div class="dcard">
-            <div class="dlabel">Revenue this month</div>
-            <div class="dval grad">€12,480</div>
-            <div class="dchange">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
-              34% vs last month
-            </div>
-            <div class="barchart">
-              <div class="bar bar1"></div><div class="bar bar2"></div><div class="bar bar3"></div>
-              <div class="bar bar4"></div><div class="bar bar5"></div><div class="bar bar6"></div><div class="bar bar7"></div>
-            </div>
+        <div class="dash-header-title">Hotel Riviera · Sanremo</div>
+      </div>
+      <div class="dash-body">
+        <div class="kpi-row">
+          <div class="kpi">
+            <div class="kpi-label">Revenue · Aug</div>
+            <div class="kpi-val blue">€12,480</div>
+            <div class="kpi-change">↑ 34% vs last month</div>
           </div>
-          <div class="dcard">
-            <div class="dlabel">Occupancy rate</div>
-            <div class="dval" id="occ">0%</div>
-            <div class="dchange">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
-              12% this month
-            </div>
+          <div class="kpi">
+            <div class="kpi-label">Occupancy</div>
+            <div class="kpi-val" id="occ-val">0%</div>
+            <div class="kpi-change">↑ 12% this month</div>
           </div>
-          <div class="dai">
-            <div class="dai-tag">AI Insight</div>
-            <p>Raise rates <strong>+22%</strong> Aug 12–19. Regional demand peaks in 8 days based on search trends.</p>
-          </div>
-          <div class="dcard">
-            <div class="dlabel">WhatsApp sent today</div>
-            <div class="dval" id="wsent">0</div>
-            <div class="dchange">100% delivered automatically</div>
+          <div class="kpi">
+            <div class="kpi-label">WhatsApp today</div>
+            <div class="kpi-val" id="wa-val">0</div>
+            <div class="kpi-change">100% delivered</div>
           </div>
         </div>
-        <div class="dash-book">
-          <div class="blist">
-            <div class="blist-t">Live reservations</div>
-            <div class="brow">
-              <div class="bav" style="background:linear-gradient(135deg,#0197AF,#00EED0)">MR</div>
-              <div><div class="bname">Marco Rossi</div><div class="bdate">Aug 15–18 · Suite 204</div></div>
-              <span class="bamt">€340</span><span class="bbadge bc">✓</span>
-            </div>
-            <div class="brow">
-              <div class="bav" style="background:linear-gradient(135deg,#4B227A,#0197AF)">SB</div>
-              <div><div class="bname">Sophie Bernard</div><div class="bdate">Aug 20–24 · Room 301</div></div>
-              <span class="bamt">€680</span><span class="bbadge bp">~</span>
-            </div>
-            <div class="brow">
-              <div class="bav" style="background:linear-gradient(135deg,#02153D,#4B227A)">AB</div>
-              <div><div class="bname">Ahmed Ben Ali</div><div class="bdate">Aug 22–25 · Room 112</div></div>
-              <span class="bamt">€290</span><span class="bbadge bc">✓</span>
-            </div>
+        <div class="chart-wrap">
+          <div class="chart-label">Bookings by week — August</div>
+          <div class="bars">
+            <div class="bar-item"><div class="bar-fill" style="--h:32%;--d:1.2s"></div></div>
+            <div class="bar-item"><div class="bar-fill" style="--h:48%;--d:1.3s"></div></div>
+            <div class="bar-item"><div class="bar-fill" style="--h:65%;--d:1.4s"></div></div>
+            <div class="bar-item"><div class="bar-fill" style="--h:80%;--d:1.5s"></div></div>
+            <div class="bar-item"><div class="bar-fill" style="--h:94%;--d:1.6s"></div></div>
+            <div class="bar-item"><div class="bar-fill" style="--h:72%;--d:1.7s"></div></div>
+            <div class="bar-item"><div class="bar-fill" style="--h:58%;--d:1.8s"></div></div>
           </div>
-          <div class="wstat dcard">
-            <div class="dlabel">Avg stay value</div>
-            <div class="dval grad">€437</div>
-            <div class="dchange">↑ 8% this season</div>
-          </div>
+        </div>
+        <div class="booking-label">Recent reservations</div>
+        <div class="booking-row">
+          <div class="b-av" style="background:linear-gradient(135deg,#0197AF,#00c4b8)">MR</div>
+          <div class="b-info"><div class="b-name">Marco Rossi</div><div class="b-date">Aug 15–18 · Suite 204</div></div>
+          <div class="b-amt">€340</div>
+          <div class="b-badge bc">Confirmed</div>
+        </div>
+        <div class="booking-row">
+          <div class="b-av" style="background:linear-gradient(135deg,#4B227A,#0197AF)">SB</div>
+          <div class="b-info"><div class="b-name">Sophie Bernard</div><div class="b-date">Aug 20–24 · Room 301</div></div>
+          <div class="b-amt">€680</div>
+          <div class="b-badge bp">Pending</div>
+        </div>
+        <div class="booking-row">
+          <div class="b-av" style="background:linear-gradient(135deg,#0f1f2e,#0197AF)">AB</div>
+          <div class="b-info"><div class="b-name">Ahmed Ben Ali</div><div class="b-date">Aug 22–25 · Room 112</div></div>
+          <div class="b-amt">€290</div>
+          <div class="b-badge bc">Confirmed</div>
+        </div>
+        <div class="ai-card">
+          <div class="ai-label"><div class="ai-dot"></div>AI Guest Insight</div>
+          <div class="ai-text">Sophie Bernard hasn't booked for next summer yet. She travels every July — <b>send her a personal offer this week</b> before she books elsewhere.</div>
         </div>
       </div>
-      <div class="fnotif">
-        <div class="nic">✅</div>
-        <div><div class="nt">New booking — €340</div><div class="ns">WhatsApp sent automatically</div></div>
+    </div>
+    <div class="notif">
+      <div class="notif-icon">✅</div>
+      <div>
+        <div class="notif-title">New booking — €340</div>
+        <div class="notif-sub">WhatsApp confirmation sent automatically</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- TICKER -->
-<div class="ticker"><div class="ticker-t">
-  <div class="ti"><div class="ti-dot"></div>🇮🇹 Hotel Riviera, Sanremo · <span>New booking confirmed · €340</span></div>
-  <div class="ti"><div class="ti-dot"></div>🇹🇳 Dar Jasmine, Hammamet · <span>AI raised price +22%</span></div>
-  <div class="ti"><div class="ti-dot"></div>🇫🇷 Villa Méditerranée, Nice · <span>Google review 5★</span></div>
-  <div class="ti"><div class="ti-dot"></div>🇩🇪 Pension Ligurien, Genova · <span>Booking page live</span></div>
-  <div class="ti"><div class="ti-dot"></div>🇨🇭 Hotel Lac, Geneva · <span>12 bookings this week</span></div>
-  <div class="ti"><div class="ti-dot"></div>🇮🇹 Hotel Riviera, Sanremo · <span>New booking confirmed · €340</span></div>
-  <div class="ti"><div class="ti-dot"></div>🇹🇳 Dar Jasmine, Hammamet · <span>AI raised price +22%</span></div>
-  <div class="ti"><div class="ti-dot"></div>🇫🇷 Villa Méditerranée, Nice · <span>Google review 5★</span></div>
-  <div class="ti"><div class="ti-dot"></div>🇩🇪 Pension Ligurien, Genova · <span>Booking page live</span></div>
-  <div class="ti"><div class="ti-dot"></div>🇨🇭 Hotel Lac, Geneva · <span>12 bookings this week</span></div>
+<div class="ticker"><div class="ticker-inner">
+  <div class="ticker-item">🇮🇹 Hotel Riviera, Sanremo <span class="ticker-sep">·</span> <strong>New booking confirmed · €340</strong></div>
+  <div class="ticker-item">🇹🇳 Dar Jasmine, Hammamet <span class="ticker-sep">·</span> <strong>WhatsApp confirmation sent</strong></div>
+  <div class="ticker-item">🇫🇷 Villa Méditerranée, Nice <span class="ticker-sep">·</span> <strong>Google review 5★ received</strong></div>
+  <div class="ticker-item">🇩🇪 Pension Riviera, Genova <span class="ticker-sep">·</span> <strong>Booking page activated</strong></div>
+  <div class="ticker-item">🇨🇭 Hotel du Lac, Geneva <span class="ticker-sep">·</span> <strong>12 bookings this week</strong></div>
+  <div class="ticker-item">🇮🇹 Hotel Riviera, Sanremo <span class="ticker-sep">·</span> <strong>New booking confirmed · €340</strong></div>
+  <div class="ticker-item">🇹🇳 Dar Jasmine, Hammamet <span class="ticker-sep">·</span> <strong>WhatsApp confirmation sent</strong></div>
+  <div class="ticker-item">🇫🇷 Villa Méditerranée, Nice <span class="ticker-sep">·</span> <strong>Google review 5★ received</strong></div>
+  <div class="ticker-item">🇩🇪 Pension Riviera, Genova <span class="ticker-sep">·</span> <strong>Booking page activated</strong></div>
+  <div class="ticker-item">🇨🇭 Hotel du Lac, Geneva <span class="ticker-sep">·</span> <strong>12 bookings this week</strong></div>
 </div></div>
 
-<!-- ════ PROBLEM → SOLUTION ════ -->
-<section class="ps-sec" id="ps">
-  <div class="r"><div class="sl">The problem we solve</div></div>
-  <div class="ps-grid">
+<!-- ════════ PROBLEM ════════ -->
+<section class="problem-section" id="problem">
+  <div class="r"><div class="section-label">The problem we solve</div></div>
+  <div class="problem-grid">
     <div class="r">
-      <div class="comp-box comp-bad">
-        <div class="comp-label">✕ Without MedStay</div>
-        <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff5f56" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>50+ WhatsApp messages to handle every morning</div>
-        <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff5f56" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Losing bookings because you replied too slowly</div>
-        <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff5f56" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Paying Booking.com 15–25% per reservation</div>
-        <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff5f56" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Guessing room prices with no data</div>
+      <div class="compare-box compare-bad">
+        <div class="compare-title bad">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c45a38" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Without MedStay
+        </div>
+        <div class="compare-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c45a38" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>50+ WhatsApp messages to handle every morning</div>
+        <div class="compare-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c45a38" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Booking.com takes 15–25% of every reservation</div>
+        <div class="compare-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c45a38" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Guests disappear after checkout — forever</div>
+        <div class="compare-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c45a38" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>No data — guessing prices every season</div>
       </div>
-      <div class="comp-box comp-good">
-        <div class="comp-label">✓ With MedStay</div>
-        <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Confirmations sent automatically — zero manual work</div>
-        <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Guests book 24/7 online in their own language</div>
-        <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Flat fee — 100% of every booking goes to you</div>
-        <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>AI tells you the exact right price before demand hits</div>
+      <div class="compare-divider"></div>
+      <div class="compare-box compare-good">
+        <div class="compare-title good">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          With MedStay
+        </div>
+        <div class="compare-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Confirmations sent automatically via WhatsApp</div>
+        <div class="compare-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>0% commission — every euro stays with you</div>
+        <div class="compare-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>AI tells you exactly when past guests will book again</div>
+        <div class="compare-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Real data — booking patterns, peak weeks, top guests</div>
       </div>
     </div>
     <div class="r r2">
-      <div class="sl">What MedStay gives you</div>
-      <h2 class="stitle">Your hotel runs<br><em>intelligently</em></h2>
-      <p class="sbody">Complete hospitality management for independent hotels — the same digital tools big chains use, at a flat monthly price with zero commission.</p>
-      <div class="spills">
-        <div class="spill"><div class="sn">8h</div><div class="slb">Saved per week<span class="sle">No more manual WhatsApp</span></div></div>
-        <div class="spill"><div class="sn">3×</div><div class="slb">More returning guests<span class="sle">Automated loyalty</span></div></div>
-        <div class="spill"><div class="sn">22%</div><div class="slb">More revenue / room<span class="sle">AI pricing</span></div></div>
-        <div class="spill"><div class="sn">0%</div><div class="slb">Commission taken<span class="sle">Keep every euro</span></div></div>
+      <div class="section-label">What this costs hotels</div>
+      <h2 class="section-title">70% of happy guests<br><em>never come back.</em></h2>
+      <p class="section-body">Not because they didn't enjoy their stay. Because nobody ever reached out to them again. MedStay fixes this permanently — every guest who ever stays becomes a relationship you own forever.</p>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-num">70%</div><div class="stat-label">Happy guests who never return to the same hotel</div></div>
+        <div class="stat-box"><div class="stat-num">20%</div><div class="stat-label">Average commission Booking.com charges per booking</div></div>
+        <div class="stat-box"><div class="stat-num">8h</div><div class="stat-label">Hours lost every week replying to WhatsApp manually</div></div>
+        <div class="stat-box"><div class="stat-num">0</div><div class="stat-label">Guest profiles that most small hotels currently own</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════ HOW IT WORKS ════ -->
-<section class="how-sec">
-  <div class="r"><div class="sl">How it works</div></div>
-  <h2 class="stitle r r2">Live in <em>30 minutes</em></h2>
-  <p class="sbody r r3" style="max-width:480px">No technical skills. No developer. No setup fee. Three steps.</p>
-  <div class="steps r">
-    <div class="flow-beam"></div>
+<div class="divider"></div>
+
+<!-- ════════ HOW IT WORKS ════════ -->
+<section class="how-section">
+  <div class="r"><div class="section-label">How it works</div></div>
+  <h2 class="section-title r r2">Up and running<br><em>in 30 minutes.</em></h2>
+  <p class="section-body r r3">No technical skills. No developer. No training needed.</p>
+  <div class="steps-grid r">
     <div class="step">
-      <div class="step-ring"><div class="step-c"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 22V12h6v10"/><path d="M3 9h18"/></svg><div class="step-n">1</div></div></div>
-      <h3>Set up your hotel</h3>
-      <p>Add rooms, photos, and prices. Your booking page goes live instantly — no code, no design skills needed.</p>
+      <div class="step-num">01</div>
+      <div class="step-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 22V12h6v10"/><path d="M3 9h18"/></svg></div>
+      <h3>Create your hotel profile</h3>
+      <p>Add your rooms, photos, and prices. Your professional booking page is live the same day — with your name and branding.</p>
     </div>
     <div class="step">
-      <div class="step-ring"><div class="step-c"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.7" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><div class="step-n">2</div></div></div>
-      <h3>Guests book directly</h3>
-      <p>Customers book in seconds. WhatsApp confirmation sent instantly. You wake up to confirmed bookings.</p>
+      <div class="step-num">02</div>
+      <div class="step-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+      <h3>Guests book directly online</h3>
+      <p>Customers find you, choose their dates, and confirm in seconds. WhatsApp confirmation sent automatically in their language.</p>
     </div>
     <div class="step">
-      <div class="step-ring"><div class="step-c"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.7" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg><div class="step-n">3</div></div></div>
-      <h3>Grow with AI</h3>
-      <p>Your dashboard shows revenue, occupancy, and guest data. AI tells you when to raise prices before competitors.</p>
+      <div class="step-num">03</div>
+      <div class="step-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+      <h3>AI tells you what to do next</h3>
+      <p>Your dashboard shows every guest, their history, and exactly when to reach out to bring them back — before they book somewhere else.</p>
     </div>
   </div>
 </section>
 
-<!-- ════ ABOUT ════ -->
-<section class="about-sec" id="about">
-  <div class="about-inner">
+<div class="divider"></div>
+
+<!-- ════════ FEATURES ════════ -->
+<section class="feat-section">
+  <div class="feat-header">
+    <div>
+      <div class="section-label r">Features</div>
+      <h2 class="section-title r r2">Built for hotels<br><em>like yours.</em></h2>
+    </div>
+    <a href="features.html" class="cta-secondary r r3" style="flex-shrink:0;margin-bottom:14px">
+      See all features
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="feat-grid">
+    <div class="feat r">
+      <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <h3>WhatsApp Automation</h3>
+      <p>Every booking sends an automatic confirmation, arrival reminder, and checkout thank you — in the guest's language. You do nothing.</p>
+    </div>
+    <div class="feat r r2">
+      <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.66z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.66z"/></svg></div>
+      <h3>Guest Memory & AI</h3>
+      <p>Every guest gets a permanent profile. The AI studies their patterns and tells you exactly when they'll want to travel again.</p>
+      <span class="feat-badge">Core feature</span>
+    </div>
+    <div class="feat r r3">
+      <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <h3>Auto Review Requests</h3>
+      <p>Two hours after checkout, guests get a perfectly timed Google Review request. Hotels average +0.7 stars in 90 days.</p>
+    </div>
+    <div class="feat r r4">
+      <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+      <h3>5-Language Messaging</h3>
+      <p>Write once. Guests receive in Arabic, French, Italian, German, or English — detected automatically from their profile.</p>
+    </div>
+    <div class="feat r r5">
+      <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
+      <h3>Seasonal Intelligence</h3>
+      <p>See which weeks fill fastest, which nationalities spend most, and when to raise or lower prices — with real data.</p>
+    </div>
+    <div class="feat r r6">
+      <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+      <h3>Direct Booking Page</h3>
+      <p>Your own branded page. Guests book directly. No Booking.com. No commission. Every euro stays with your hotel.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════ ABOUT ════════ -->
+<section class="about-section" id="about">
+  <div class="about-grid">
     <div class="r">
       <div class="about-quote">
-        Independent hotels deserve the same power as <em>Marriott</em> — without the commission.
-        <span>— The reason MedStay exists</span>
+        Independent hotels deserve the same tools as Marriott — without giving away<em> their revenue.</em>
       </div>
-      <div class="flag-strip" style="margin-top:36px">
-        <span class="flag">🇹🇳 Tunisia</span>
-        <span class="flag">🇮🇹 Italy</span>
-        <span class="flag">🇫🇷 France</span>
-        <span class="flag">🇩🇪 Germany</span>
-        <span class="flag">🇨🇭 Switzerland</span>
-        <span class="flag">🇬🇧 UK</span>
+      <div class="about-source">— Why MedStay was built</div>
+      <div class="about-flags">
+        <span class="aflag">🇹🇳 Tunisia</span>
+        <span class="aflag">🇮🇹 Italy</span>
+        <span class="aflag">🇫🇷 France</span>
+        <span class="aflag">🇩🇪 Germany</span>
+        <span class="aflag">🇨🇭 Switzerland</span>
+        <span class="aflag">🇬🇧 UK</span>
       </div>
     </div>
     <div class="r r2">
-      <div class="sl">About MedStay</div>
-      <h2 class="stitle" style="margin-bottom:32px">Built by the<br><em>Mediterranean,</em><br>for the Mediterranean</h2>
-      <div class="aval-grid">
-        <div class="aval">
-          <div class="aval-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-          <div><div class="aval-title">Zero commission, always</div><div class="aval-desc">We charge a flat monthly fee. Every euro from every booking goes directly to you. No exceptions.</div></div>
+      <div class="section-label">About MedStay</div>
+      <h2 class="section-title" style="margin-bottom:28px">Built for the<br><em>Mediterranean</em></h2>
+      <div class="about-values">
+        <div class="about-val">
+          <div class="av-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div><div class="av-title">Zero commission, always</div><div class="av-desc">Flat monthly fee. Every euro from every booking goes directly to you — forever.</div></div>
         </div>
-        <div class="aval">
-          <div class="aval-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-          <div><div class="aval-title">Mediterranean-first design</div><div class="aval-desc">Built for our seasons, our languages, and our hospitality culture — not adapted from a generic tool.</div></div>
+        <div class="about-val">
+          <div class="av-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div><div class="av-title">Mediterranean-first design</div><div class="av-desc">Built for our seasons, our languages, and the culture of hospitality in our region.</div></div>
         </div>
-        <div class="aval">
-          <div class="aval-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
-          <div><div class="aval-title">Simple enough for anyone</div><div class="aval-desc">If a hotel owner who has never used software can set it up in 30 minutes, we have succeeded.</div></div>
+        <div class="about-val">
+          <div class="av-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0197AF" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div><div class="av-title">Simple enough for anyone</div><div class="av-desc">Setup in 30 minutes. No technical skills, no developer, no training required.</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════ FEATURES ════ -->
-<section class="feat-sec">
-  <div class="r"><div class="sl">Features</div></div>
-  <h2 class="stitle r r2">Everything your hotel<br><em>actually needs</em></h2>
-  <p class="sbody r r3" style="max-width:480px">Not generic software. Every feature solves a real problem Mediterranean hotel owners face every day.</p>
-  <div class="fgrid">
-    <div class="fcard f1 r"><div class="fic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.66z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.66z"/></svg></div><h3>AI Smart Pricing</h3><p>Studies booking patterns and demand signals to tell you the optimal room rate — before the market moves.</p><span class="ftag">✦ Exclusive</span></div>
-    <div class="fcard f2 r r2"><div class="fic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>WhatsApp Automation</h3><p>Confirmations, reminders, and promos sent via WhatsApp automatically. 97% delivery. Zero manual work.</p></div>
-    <div class="fcard f3 r r3"><div class="fic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3>5-Language Messaging</h3><p>Write once. Guests receive it in Arabic, French, English, German, or Italian — automatically.</p></div>
-    <div class="fcard f4 r r4"><div class="fic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><h3>Auto Review Engine</h3><p>After every checkout, guests get a perfectly timed Google Review request. Hotels average +0.7 stars in 90 days.</p><span class="ftag">✦ Exclusive</span></div>
-    <div class="fcard f5 r r5"><div class="fic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div><h3>Seasonal Intelligence</h3><p>Know your busiest weeks months ahead. See which nationalities spend most. Decide smarter every season.</p></div>
-    <div class="fcard f6 r r6"><div class="fic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00EED0" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div><h3>Mediterranean Bridge</h3><p>Connect to travelers across the Mediterranean. Fill low-season gaps with cross-border guests.</p><span class="ftag">✦ Exclusive</span></div>
-  </div>
-  <div class="r" style="text-align:center;margin-top:44px">
-    <a href="features.html" class="btn-p" style="font-size:14px;padding:13px 32px">See full feature details →</a>
-  </div>
-</section>
+<div class="divider"></div>
 
-<!-- ════ TESTIMONIALS ════ -->
-<section class="testi-sec">
-  <div class="r"><div class="sl">What hotel owners say</div></div>
-  <h2 class="stitle r r2">Trusted across the <em>Mediterranean</em></h2>
-  <div class="tgrid">
-    <div class="tcard r">
-      <div class="tstars">★★★★★</div>
-      <p class="ttext">"Before MedStay I spent 3 hours every morning on WhatsApp. Now I wake up and everything is already confirmed. I have no idea how I managed before."</p>
-      <div class="tauthor"><div class="tav" style="background:linear-gradient(135deg,#0197AF,#00EED0)">MR</div><div><div class="tname">Marco Rossi</div><div class="trole">Hotel Riviera, Sanremo 🇮🇹</div></div></div>
+<!-- ════════ TESTIMONIALS ════════ -->
+<section class="testi-section">
+  <div class="r"><div class="section-label">What hotel owners say</div></div>
+  <h2 class="section-title r r2">Trusted from <em>Tunisia to Europe.</em></h2>
+  <div class="testi-grid">
+    <div class="testi r">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Before MedStay I spent 3 hours every morning on WhatsApp. Now I wake up and everything is already confirmed. I genuinely don't know how I managed before."</p>
+      <div class="testi-author"><div class="testi-av" style="background:linear-gradient(135deg,#0197AF,#00c4b8)">MR</div><div><div class="testi-name">Marco Rossi</div><div class="testi-role">Hotel Riviera, Sanremo 🇮🇹</div></div></div>
     </div>
-    <div class="tcard r r2">
-      <div class="tstars">★★★★★</div>
-      <p class="ttext">"The AI pricing told me to raise August prices by 20% two weeks before I would have noticed the demand spike. That one insight paid for a full year of subscription."</p>
-      <div class="tauthor"><div class="tav" style="background:linear-gradient(135deg,#02153D,#4B227A)">FA</div><div><div class="tname">Fatma Ayari</div><div class="trole">Dar Jasmine, Hammamet 🇹🇳</div></div></div>
+    <div class="testi r r2">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"I was giving Booking.com 20% on every room. Now guests book directly through my page and I keep everything. The difference at the end of the month is very real."</p>
+      <div class="testi-author"><div class="testi-av" style="background:linear-gradient(135deg,#e07050,#f5a623)">FA</div><div><div class="testi-name">Fatma Ayari</div><div class="testi-role">Dar Jasmine, Hammamet 🇹🇳</div></div></div>
     </div>
-    <div class="tcard r r3">
-      <div class="tstars">★★★★★</div>
-      <p class="ttext">"My Google rating went from 4.1 to 4.8 in 3 months. I changed nothing about the hotel — just started using the automatic review requests after every checkout."</p>
-      <div class="tauthor"><div class="tav" style="background:linear-gradient(135deg,#4B227A,#0197AF)">SB</div><div><div class="tname">Sophie Bernard</div><div class="trole">Villa Méditerranée, Nice 🇫🇷</div></div></div>
+    <div class="testi r r3">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"My Google rating went from 4.1 to 4.8 in three months. I changed nothing about the hotel — I just started using the automatic review requests after checkout."</p>
+      <div class="testi-author"><div class="testi-av" style="background:linear-gradient(135deg,#4B227A,#0197AF)">SB</div><div><div class="testi-name">Sophie Bernard</div><div class="testi-role">Villa Méditerranée, Nice 🇫🇷</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- ════ CTA ════ -->
-<section class="cta-sec">
-  <div class="r"><div class="sl" style="justify-content:center">Start today</div></div>
-  <h2 class="cta-title r r2">Your hotel deserves<br><em>better tools.</em></h2>
-  <p class="cta-sub r r3">30-day free trial. No credit card. Setup in 30 minutes. Cancel anytime.</p>
-  <div class="cta-btns r r4">
-    <a href="contact.html" class="btn-p" style="font-size:16px;padding:17px 48px">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      Start your free trial
-    </a>
-    <a href="pricing.html" class="btn-g" style="font-size:16px;padding:17px 40px">View pricing</a>
+<!-- ════════ CTA ════════ -->
+<section class="cta-section">
+  <div class="cta-label">Get started today</div>
+  <h2 class="cta-h2 r">Your hotel deserves<br><em>better tools.</em></h2>
+  <p class="cta-p r r2">30-day free trial. No credit card. Setup in 30 minutes. Cancel anytime.</p>
+  <div class="cta-btns r r3">
+    <a href="contact.html" class="cta-primary-inv">Start free trial →</a>
+    <a href="pricing.html" class="cta-secondary-inv">View pricing</a>
   </div>
-  <div class="trust-line r r5">Trusted by hotels in <span>Tunisia · Italy · France · Germany · Switzerland</span></div>
+  <div class="cta-trust r r4">Flat monthly fee · 0% commission · Cancel anytime</div>
 </section>
 
-<!-- ════ FOOTER ════ -->
+<!-- ════════ FOOTER ════════ -->
 <footer>
-  <a href="index.html" class="fl">
-    <svg width="28" height="28" viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="17" stroke="#0197AF" stroke-width="1.2" opacity="0.4"/><path d="M7 23 Q10 18 13 23 Q16 28 19 23 Q22 18 25 23 Q28 28 31 23" fill="none" stroke="#0197AF" stroke-width="1.8" stroke-linecap="round"/><circle cx="19" cy="14" r="3" fill="#0197AF"/><circle cx="19" cy="14" r="1.3" fill="#00EED0"/></svg>
-    <div class="fln">Med<em>Stay</em></div>
+  <a href="index.html" class="footer-logo">
+    <svg width="26" height="26" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14.5" stroke="#0197AF" stroke-width="1.2" opacity=".4"/><path d="M6 19 Q8.5 14.5 11 19 Q13.5 23.5 16 19 Q18.5 14.5 21 19 Q23.5 23.5 26 19" stroke="#0197AF" stroke-width="1.6" stroke-linecap="round" fill="none"/><circle cx="16" cy="12" r="2.2" fill="#0197AF"/><circle cx="16" cy="12" r="1" fill="#00c4b8"/></svg>
+    <span class="footer-logo-name">Med<em>Stay</em></span>
   </a>
   <span>© 2025 MedStay · Tunisia · Italy · France · Switzerland · Germany · UK</span>
   <a href="mailto:hello@medstay.io" class="fmail">hello@medstay.io</a>
 </footer>
 
 <script>
-/* ── CURSOR ── */
-const cur=document.getElementById('cur'),cr=document.getElementById('cur-ring');
+/* CURSOR */
+const cur=document.getElementById('cur'),cr=document.getElementById('cur-r');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx-5+'px';cur.style.top=my-5+'px';});
-(function rl(){rx+=(mx-rx-19)*.1;ry+=(my-ry-19)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(rl);})();
-document.querySelectorAll('a,button,[class*="card"],[class*="step"],[class*="spill"],[class*="aval"]').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2.5)';cr.style.opacity='.2';});
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx-4+'px';cur.style.top=my-4+'px';});
+(function l(){rx+=(mx-rx-16)*.1;ry+=(my-ry-16)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(l);})();
+document.querySelectorAll('a,button,.feat,.step,.testi,.stat-box,.about-val').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='scale(3)';cr.style.opacity='.2';});
   el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';cr.style.opacity='1';});
 });
 
-/* ── STAR CANVAS ── */
-(function(){
-  const c=document.getElementById('starCanvas');
-  const ctx=c.getContext('2d');
-  c.width=window.innerWidth;c.height=window.innerHeight;
-  window.addEventListener('resize',()=>{c.width=window.innerWidth;c.height=window.innerHeight;});
-  const stars=[];
-  for(let i=0;i<180;i++){
-    stars.push({
-      x:Math.random()*c.width,y:Math.random()*c.height*.6,
-      r:Math.random()*1.2+.2,o:Math.random()*.7+.1,
-      tw:Math.random()*3+1.5
-    });
-  }
-  function drawStars(){
-    ctx.clearRect(0,0,c.width,c.height);
-    const t=Date.now()/1000;
-    stars.forEach(s=>{
-      const op=s.o*(0.6+0.4*Math.sin(t/s.tw));
-      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(200,230,255,${op})`;ctx.fill();
-    });
-    requestAnimationFrame(drawStars);
-  }
-  drawStars();
-})();
-
-/* ── MEDITERRANEAN CITYSCAPE CANVAS ── */
-(function(){
-  const c=document.getElementById('cityCanvas');
-  const ctx=c.getContext('2d');
-  function resize(){c.width=c.offsetWidth;c.height=c.offsetHeight;}
-  resize();window.addEventListener('resize',resize);
-
-  // Buildings configuration — evokes Mediterranean coastal cities
-  const buildings=[
-    // Hammamet / Tunis style — flat-roofed, white medina
-    {x:.02,w:.06,h:.55,color:'#0a1e3a',windows:[[.2,.15],[.5,.15],[.8,.15],[.2,.4],[.5,.4],[.8,.4],[.2,.65],[.5,.65],[.8,.65]]},
-    {x:.04,w:.04,h:.7,color:'#0b2040',windows:[[.3,.1],[.7,.1],[.3,.35],[.7,.35],[.3,.6],[.7,.6]]},
-    {x:.09,w:.07,h:.45,color:'#091830',windows:[[.25,.2],[.6,.2],[.25,.5],[.6,.5]]},
-    // Tower / minaret shape
-    {x:.13,w:.025,h:.9,color:'#0c2244',windows:[[.3,.08],[.7,.08],[.3,.2],[.7,.2],[.3,.32],[.7,.32]]},
-    {x:.16,w:.05,h:.5,color:'#0a1e3a',windows:[[.2,.15],[.6,.15],[.2,.45],[.6,.45]]},
-    // Sanremo / Italian Riviera style — taller, ornate
-    {x:.22,w:.055,h:.72,color:'#0b2040',windows:[[.2,.08],[.5,.08],[.8,.08],[.2,.25],[.5,.25],[.8,.25],[.2,.42],[.5,.42],[.8,.42],[.2,.59],[.5,.59],[.8,.59]]},
-    {x:.28,w:.04,h:.58,color:'#091830',windows:[[.25,.12],[.7,.12],[.25,.38],[.7,.38],[.25,.64],[.7,.64]]},
-    {x:.33,w:.08,h:.48,color:'#0a1e3a',windows:[[.15,.15],[.45,.15],[.75,.15],[.15,.42],[.45,.42],[.75,.42]]},
-    // Dome shape (mosque / basilica)
-    {x:.42,w:.06,h:.38,color:'#0b2040',dome:true,windows:[]},
-    {x:.4,w:.1,h:.28,color:'#0a1e3a',windows:[[.2,.3],[.5,.3],[.8,.3]]},
-    // Nice / French Riviera — Belle Époque style
-    {x:.52,w:.05,h:.68,color:'#091830',windows:[[.2,.08],[.6,.08],[.2,.24],[.6,.24],[.2,.4],[.6,.4],[.2,.56],[.6,.56]]},
-    {x:.58,w:.07,h:.52,color:'#0b2040',windows:[[.15,.12],[.45,.12],[.75,.12],[.15,.38],[.45,.38],[.75,.38]]},
-    {x:.65,w:.04,h:.78,color:'#0c2244',windows:[[.25,.06],[.7,.06],[.25,.18],[.7,.18],[.25,.3],[.7,.3],[.25,.42],[.7,.42]]},
-    {x:.7,w:.055,h:.44,color:'#091830',windows:[[.2,.18],[.55,.18],[.2,.46],[.55,.46]]},
-    // Background distant buildings
-    {x:.75,w:.06,h:.35,color:'#081626',windows:[[.2,.2],[.55,.2],[.2,.5],[.55,.5]]},
-    {x:.82,w:.04,h:.55,color:'#09192e',windows:[[.3,.1],[.7,.1],[.3,.32],[.7,.32],[.3,.54],[.7,.54]]},
-    {x:.87,w:.055,h:.42,color:'#081626',windows:[[.2,.15],[.55,.15],[.2,.45],[.55,.45]]},
-    {x:.93,w:.04,h:.62,color:'#0a1e3a',windows:[[.25,.08],[.7,.08],[.25,.26],[.7,.26],[.25,.44],[.7,.44]]},
-    {x:.96,w:.06,h:.38,color:'#091830',windows:[[.2,.2],[.6,.2],[.2,.5],[.6,.5]]},
-  ];
-
-  let t=0;
-  function draw(){
-    t+=.008;
-    ctx.clearRect(0,0,c.width,c.height);
-    const H=c.height,W=c.width;
-
-    // Draw each building
-    buildings.forEach(b=>{
-      const bx=b.x*W,bw=b.w*W,bh=b.h*H;
-      const by=H-bh;
-
-      // Building body
-      ctx.fillStyle=b.color;
-      ctx.fillRect(bx,by,bw,bh);
-
-      // Dome
-      if(b.dome){
-        ctx.beginPath();
-        ctx.ellipse(bx+bw/2,by,bw/2,bh*.4,0,Math.PI,0,true);
-        ctx.fillStyle=b.color;ctx.fill();
-      }
-
-      // Roofline subtle gradient
-      const roofGrad=ctx.createLinearGradient(0,by,0,by+8);
-      roofGrad.addColorStop(0,'rgba(1,151,175,.06)');
-      roofGrad.addColorStop(1,'transparent');
-      ctx.fillStyle=roofGrad;
-      ctx.fillRect(bx,by,bw,8);
-
-      // Windows — warm amber glow
-      b.windows.forEach((w,wi)=>{
-        const wx=bx+w[0]*bw-3,wy=by+w[1]*bh-3;
-        const ww=5,wh=7;
-        // Flicker effect
-        const flicker=.7+.3*Math.sin(t*2.3+wi*1.7+b.x*10);
-        const isOn=Math.sin(wi*3.14+b.x*7)>.05;
-        if(isOn){
-          // Window glow
-          const grd=ctx.createRadialGradient(wx+ww/2,wy+wh/2,0,wx+ww/2,wy+wh/2,ww*2.5);
-          grd.addColorStop(0,`rgba(245,166,35,${.18*flicker})`);
-          grd.addColorStop(1,'transparent');
-          ctx.fillStyle=grd;
-          ctx.fillRect(wx-ww,wy-wh,ww*3,wh*3);
-          // Window itself
-          ctx.fillStyle=`rgba(255,200,80,${.7*flicker})`;
-          ctx.fillRect(wx,wy,ww,wh);
-        } else {
-          ctx.fillStyle='rgba(20,40,70,.8)';
-          ctx.fillRect(wx,wy,ww,wh);
-        }
-      });
-    });
-
-    // Water — reflection strip
-    const waterY=H*.82;
-    const waterGrad=ctx.createLinearGradient(0,waterY,0,H);
-    waterGrad.addColorStop(0,'rgba(1,151,175,.06)');
-    waterGrad.addColorStop(.5,'rgba(0,238,208,.04)');
-    waterGrad.addColorStop(1,'rgba(2,21,61,.8)');
-    ctx.fillStyle=waterGrad;ctx.fillRect(0,waterY,W,H-waterY);
-
-    // Ripple lines on water
-    for(let r=0;r<5;r++){
-      const ry=waterY+10+r*12;
-      const alpha=.06-r*.01;
-      ctx.beginPath();
-      ctx.moveTo(0,ry+Math.sin(t+r)*2);
-      for(let rx=0;rx<W;rx+=8){
-        ctx.lineTo(rx,ry+Math.sin(t*1.3+rx*.02+r)*.8);
-      }
-      ctx.strokeStyle=`rgba(0,238,208,${alpha})`;
-      ctx.lineWidth=.8;ctx.stroke();
-    }
-
-    // Building reflections in water
-    buildings.forEach(b=>{
-      const bx=b.x*W,bw=b.w*W,bh=b.h*H*.3;
-      const rGrad=ctx.createLinearGradient(0,waterY,0,waterY+bh);
-      rGrad.addColorStop(0,`rgba(10,30,60,.4)`);
-      rGrad.addColorStop(1,'transparent');
-      ctx.fillStyle=rGrad;
-      ctx.fillRect(bx,waterY,bw,bh);
-    });
-
-    // Moon / light source
-    const moonX=W*.82,moonY=H*.08;
-    const moonGlow=ctx.createRadialGradient(moonX,moonY,0,moonX,moonY,80);
-    moonGlow.addColorStop(0,'rgba(200,220,255,.25)');
-    moonGlow.addColorStop(.3,'rgba(168,218,220,.08)');
-    moonGlow.addColorStop(1,'transparent');
-    ctx.fillStyle=moonGlow;ctx.beginPath();ctx.arc(moonX,moonY,80,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba(220,235,255,.9)';ctx.beginPath();ctx.arc(moonX,moonY,10,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba(240,248,255,.6)';ctx.beginPath();ctx.arc(moonX,moonY,6,0,Math.PI*2);ctx.fill();
-
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-/* ── FLOATING PARTICLES ── */
-(function(){
-  const hero=document.querySelector('.hero');
-  for(let i=0;i<18;i++){
-    const p=document.createElement('div');
-    p.className='particle';
-    const size=Math.random()*2+.5;
-    p.style.cssText=`
-      width:${size}px;height:${size}px;
-      left:${Math.random()*100}%;
-      bottom:${Math.random()*30}%;
-      --dx:${(Math.random()-.5)*80}px;
-      animation-duration:${Math.random()*12+8}s;
-      animation-delay:${Math.random()*8}s;
-      opacity:${Math.random()*.4+.1};
-    `;
-    hero.appendChild(p);
-  }
-})();
-
-/* ── TYPEWRITER ── */
-const words=['sleep.','grow.','focus.','travel.','thrive.'];
-let wi=0,ci=0,del=false;
-const tw=document.getElementById('tw');
-function type(){
-  const w=words[wi];
-  if(!del){tw.textContent=w.slice(0,ci+1);ci++;if(ci===w.length){del=true;setTimeout(type,2000);return;}}
-  else{tw.textContent=w.slice(0,ci-1);ci--;if(ci===0){del=false;wi=(wi+1)%words.length;}}
-  setTimeout(type,del?52:88);
-}
-setTimeout(type,2200);
-
-/* ── SCROLL REVEAL ── */
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*75);obs.unobserve(e.target);}
-  });
-},{threshold:.06});
-document.querySelectorAll('.r').forEach(el=>obs.observe(el));
-
-/* ── ANIMATED COUNTERS ── */
-function countUp(el,target,sfx=''){
-  const s=performance.now();
-  (function step(ts){
-    const p=Math.min((ts-s)/1600,1),ease=1-Math.pow(1-p,3);
-    el.textContent=Math.floor(ease*target)+sfx;
-    if(p<1)requestAnimationFrame(step);
-  })(s);
-}
-// Trigger when dashboard visible
-const dashObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const occ=document.getElementById('occ');
-      const ws=document.getElementById('wsent');
-      if(occ)countUp(occ,87,'%');
-      if(ws)countUp(ws,47,'');
-      dashObs.unobserve(e.target);
-    }
-  });
-},{threshold:.3});
-const dash=document.querySelector('.dash-float');
-if(dash)dashObs.observe(dash);
-
-/* ── NAV SCROLL ── */
+/* NAV SCROLL */
 window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('dark',window.scrollY>50);
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
 });
 
-/* ── PARALLAX HERO CONTENT ── */
+/* SCROLL REVEAL */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*80);obs.unobserve(e.target);}});
+},{threshold:.07});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+
+/* KPI COUNTERS */
+const kpiObs=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting)return;
+    const occ=document.getElementById('occ-val');
+    const wa=document.getElementById('wa-val');
+    if(occ){const s=performance.now();(function step(ts){const p=Math.min((ts-s)/1400,1),e=1-Math.pow(1-p,3);occ.textContent=Math.floor(e*87)+'%';if(p<1)requestAnimationFrame(step);})(s);}
+    if(wa){const s=performance.now();(function step(ts){const p=Math.min((ts-s)/1400,1),e=1-Math.pow(1-p,3);wa.textContent=Math.floor(e*47);if(p<1)requestAnimationFrame(step);})(s);}
+    kpiObs.unobserve(entry.target);
+  });
+},{threshold:.3});
+const dashEl=document.querySelector('.dash-card');
+if(dashEl)kpiObs.observe(dashEl);
+
+/* PARALLAX HERO */
 window.addEventListener('scroll',()=>{
   const y=window.scrollY;
-  const hc=document.querySelector('.hero-content');
-  if(hc&&y<window.innerHeight){hc.style.transform=`translateY(${y*.12}px)`;hc.style.opacity=1-y/600;}
+  const hl=document.querySelector('.hero-left');
+  if(hl&&y<window.innerHeight){hl.style.transform=`translateY(${y*.06}px)`;}
 });
 </script>
 </body>
